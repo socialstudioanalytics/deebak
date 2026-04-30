@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Deebak Intelligence Hub — Confidential</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<!-- Brand fonts: Inter (English) + Cairo (Arabic) per visual identity guide -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /*
+   * DEEBAK BRAND COLOR SYSTEM
+   * Source: Deebak Brand Visual Identity Guide
+   * ─────────────────────────────────────────────
+   * Primary Yellow:  #FFD500  (Deep Yellow)
+   * Primary Black:   #000000
+   * Dark Mode BG:    #212121  (from Logo Variations Guide – dark inverse)
+   * Secondary:       #AACAF5  (A complement, RGB 170,202,245)
+   * Fintech Green:   #4CAF50
+   * Ad-tech Blue:    #0219F3  (navy/trust)
+   * Supportive:      #560600  (RGB 86,6,0)
+   * UI Body:         Light Gray
+   * Alerts Green:    #4CAF50 / Red: system red
+   * Navy (Trust):    #02196F
+   * ─────────────────────────────────────────────
+   * Typography:
+   *   English: Inter  (headings SemiBold 600, body 400, labels 400/700)
+   *   Arabic:  Cairo  (same weight scale)
+   *   Headings: 600, 24px+
+   *   Body:     400, 16px
+   *   Labels:   400/700, 14px
+   */
+
+  /* ── DARK MODE — brand dark inverse (#212121 bg) ── */
+  :root {
+    --yellow:     #FFD500;
+    --yellow-dim: #c9a900;
+    --yellow-faint: rgba(255,213,0,0.07);
+    --yellow-glow:  rgba(255,213,0,0.18);
+    --black:      #000000;
+
+    /* Dark mode surfaces — from brand guide dark inverse */
+    --bg:    #212121;
+    --bg-1:  #2a2a2a;
+    --bg-2:  #333333;
+    --bg-3:  #3d3d3d;
+    --border:   #3a3a3a;
+    --border-2: #484848;
+
+    /* Text hierarchy */
+    --text:   #FFFFFF;
+    --text-2: #CCCCCC;
+    --text-3: #888888;
+    --text-4: #555555;
+
+    /* Brand secondary & semantic colors */
+    --green:  #4CAF50;
+    --red:    #F44336;
+    --blue:   #0219F3;
+    --navy:   #02196F;
+    --secondary: #AACAF5;
+
+    /* Scoreboard card treatment */
+    --score-bg:     #1a1a00;
+    --score-border: #3d3200;
+
+    /* Functional */
+    --sidebar-w:  240px;
+    --topbar-bg:  rgba(33,33,33,0.97);
+    --lock-bg:    #212121;
+    --table-hover: #2a2a2a;
+    --srow-border: #333333;
+
+    /* Tag colors — dark mode */
+    --tag-yellow-bg: #1f1900; --tag-yellow-border: #3d3200; --tag-yellow-text: #FFD500;
+    --tag-green-bg:  #0a1f0a; --tag-green-border:  #1a3a1a; --tag-green-text:  #4CAF50;
+    --tag-red-bg:    #1f0a0a; --tag-red-border:    #3a1a1a; --tag-red-text:    #F44336;
+    --tag-blue-bg:   #080a2a; --tag-blue-border:   #151a4a; --tag-blue-text:   #6680FF;
+    --tag-gray-bg:   #2a2a2a; --tag-gray-border:   #3a3a3a; --tag-gray-text:   #888888;
+  }
+
+  /* ── LIGHT MODE — brand on white (#FFFFFF bg) ──── */
+  body.light {
+    --yellow:     #FFD500;
+    --yellow-dim: #c9a900;
+    --yellow-faint: rgba(255,213,0,0.08);
+    --yellow-glow:  rgba(255,213,0,0.25);
+
+    /* Light surfaces — brand "on white" application */
+    --bg:    #F5F5F5;
+    --bg-1:  #FFFFFF;
+    --bg-2:  #EEEEEE;
+    --bg-3:  #E0E0E0;
+    --border:   #E0E0E0;
+    --border-2: #CCCCCC;
+
+    /* Text hierarchy — on white */
+    --text:   #000000;
+    --text-2: #212121;
+    --text-3: #666666;
+    --text-4: #AAAAAA;
+
+    /* Brand semantic — adjusted for white bg */
+    --green:  #2E7D32;
+    --red:    #C62828;
+    --blue:   #0219F3;
+    --navy:   #02196F;
+    --secondary: #5B8DD9;
+
+    /* Scoreboard */
+    --score-bg:     #FFFDE7;
+    --score-border: #FFD500;
+
+    /* Functional */
+    --topbar-bg:  rgba(255,255,255,0.97);
+    --lock-bg:    #F5F5F5;
+    --table-hover: #FAFAFA;
+    --srow-border: #EEEEEE;
+
+    /* Tag colors — light mode */
+    --tag-yellow-bg: #FFFDE7; --tag-yellow-border: #FFD500; --tag-yellow-text: #5A4800;
+    --tag-green-bg:  #E8F5E9; --tag-green-border:  #A5D6A7; --tag-green-text:  #1B5E20;
+    --tag-red-bg:    #FFEBEE; --tag-red-border:    #EF9A9A; --tag-red-text:    #B71C1C;
+    --tag-blue-bg:   #E8EAF6; --tag-blue-border:   #9FA8DA; --tag-blue-text:   #1A237E;
+    --tag-gray-bg:   #F5F5F5; --tag-gray-border:   #CCCCCC; --tag-gray-text:   #555555;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', 'Cairo', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;       /* brand body: 16px */
+    line-height: 1.65;
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── LOCK SCREEN ─────────────────────────────────── */
+  #lock {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--lock-bg);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: background 0.3s;
+  }
+
+  /* Lock logo: exact icon image — square, natural size, rounded corners */
+  .lock-logo {
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 22px;
+    background: none;
+  }
+
+  .lock-logo img {
+    display: block;
+    width: 120px; height: 120px;
+    border-radius: 22px;
+    box-shadow: 0 8px 32px rgba(255,213,0,0.25);
+  }
+
+  #lock h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px; font-weight: 700; /* SemiBold per brand guide */
+    color: var(--yellow);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  #lock p {
+    font-size: 14px; /* brand UI label size */
+    color: var(--text-3);
+    margin-bottom: 36px;
+    text-align: center; max-width: 260px;
+    line-height: 1.6; font-weight: 400;
+  }
+
+  .lock-form {
+    display: flex; flex-direction: column;
+    align-items: center; gap: 10px;
+    width: 288px;
+  }
+
+  .lock-form input {
+    width: 100%;
+    background: var(--bg-2);
+    border: 1.5px solid var(--border-2);
+    border-radius: 10px;
+    padding: 14px 20px;
+    color: var(--text);
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    letter-spacing: 4px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .lock-form input:focus {
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 3px var(--yellow-glow);
+  }
+
+  /* Primary button: brand yellow fill, black text */
+  .lock-form button {
+    width: 100%;
+    background: var(--yellow);
+    color: var(--black);
+    border: none; border-radius: 10px;
+    padding: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 700; /* bold label per brand guide */
+    cursor: pointer;
+    letter-spacing: 0.3px;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .lock-form button:hover { opacity: 0.88; }
+  .lock-form button:active { transform: scale(0.98); }
+
+  #lock-err { font-size: 13px; color: var(--red); min-height: 18px; margin-top: 4px; font-weight: 400; }
+
+  .lock-footer {
+    position: absolute; bottom: 28px;
+    font-size: 12px; color: var(--text-4);
+    display: flex; gap: 8px; align-items: center;
+    font-weight: 400;
+  }
+
+  .lock-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-4); }
+
+  /* ── APP SHELL ───────────────────────────────────── */
+  #app { display: none; }
+  #app.show { display: flex; flex-direction: column; min-height: 100vh; }
+
+  /* ── TOPBAR ──────────────────────────────────────── */
+  .topbar {
+    position: sticky; top: 0; z-index: 200;
+    height: 56px;
+    background: var(--topbar-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    flex-shrink: 0;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .tb-left { display: flex; align-items: center; gap: 12px; }
+
+  /* Nav bar logo: exact square icon, natural ratio */
+  .tb-wolf {
+    width: 32px; height: 32px;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .tb-wolf img { display: block; width: 32px; height: 32px; }
+
+  /* Wordmark: Inter SemiBold, brand black or white depending on mode */
+  .tb-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  body:not(.light) .tb-name { color: #FFFFFF; }
+  body.light .tb-name { color: #000000; }
+
+  .tb-divider { width: 1px; height: 18px; background: var(--border-2); }
+
+  .tb-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; color: var(--text-4);
+    font-weight: 400;
+  }
+
+  .tb-right { display: flex; align-items: center; gap: 10px; }
+
+  .tb-badge {
+    background: var(--bg-2);
+    border: 1px solid var(--border-2);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; color: var(--text-3);
+    font-weight: 500;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  .tb-badge span { color: var(--yellow); font-weight: 700; }
+
+  .tb-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; color: var(--text-4); font-weight: 400;
+  }
+
+  /* ── THEME TOGGLE — moon/sun icon ────────────────── */
+  .theme-toggle {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border-2);
+    background: var(--bg-2);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s, transform 0.15s;
+    flex-shrink: 0;
+  }
+
+  .theme-toggle:hover { background: var(--bg-3); border-color: var(--yellow); transform: scale(1.08); }
+
+  .theme-toggle svg {
+    width: 17px; height: 17px;
+    stroke: var(--text-3); fill: none;
+    stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+    transition: stroke 0.2s;
+  }
+
+  .theme-toggle:hover svg { stroke: var(--yellow); }
+
+  .icon-moon { display: block; }
+  .icon-sun  { display: none; }
+  body.light .icon-moon { display: none; }
+  body.light .icon-sun  { display: block; }
+
+  /* ── LAYOUT ──────────────────────────────────────── */
+  .body-wrap { display: flex; flex: 1; }
+
+  /* ── SIDEBAR ─────────────────────────────────────── */
+  .sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 56px;
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    padding: 16px 0 40px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-2) transparent;
+    transition: border-color 0.3s;
+    background: var(--bg);
+  }
+
+  .nav-section {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px; font-weight: 600;
+    color: var(--text-4);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 16px 20px 5px;
+  }
+
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; color: var(--text-3); font-weight: 400;
+    border-left: 2px solid transparent;
+    transition: color 0.15s, background 0.15s, border-color 0.15s;
+    user-select: none; text-decoration: none;
+  }
+
+  .nav-item:hover { color: var(--text-2); background: var(--bg-2); }
+
+  .nav-item.active {
+    color: var(--yellow);
+    border-left-color: var(--yellow);
+    background: var(--yellow-faint);
+    font-weight: 600;
+  }
+
+  body.light .nav-item.active { color: #7A6500; }
+
+  .nav-num {
+    font-size: 10px; color: var(--text-4);
+    width: 18px; text-align: right; flex-shrink: 0;
+    font-weight: 500; font-variant-numeric: tabular-nums;
+  }
+
+  .nav-item.active .nav-num { color: var(--yellow-dim); }
+  body.light .nav-item.active .nav-num { color: #9A8000; }
+
+  /* ── CONTENT ─────────────────────────────────────── */
+  .content { flex: 1; padding: 44px 52px; max-width: 920px; min-width: 0; }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── PAGE HEADER ─────────────────────────────────── */
+  .ph { margin-bottom: 40px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+
+  .ph-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    color: var(--yellow);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  body.light .ph-tag { color: #7A6500; }
+
+  .ph-tag::before {
+    content: '';
+    display: inline-block; width: 20px; height: 2px;
+    background: var(--yellow); border-radius: 1px;
+  }
+
+  body.light .ph-tag::before { background: #7A6500; }
+
+  /* Page title: Inter SemiBold (600) 32px+ per brand heading spec */
+  .ph-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 34px; font-weight: 600; /* brand: SemiBold headings */
+    color: var(--text);
+    line-height: 1.15;
+    letter-spacing: -0.8px;
+    margin-bottom: 14px;
+  }
+
+  /* Page desc: Inter Regular 16px per brand body spec */
+  .ph-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px; color: var(--text-3);
+    line-height: 1.75; max-width: 620px; font-weight: 400;
+  }
+
+  /* ── SECTION HEADING ─────────────────────────────── */
+  /* Inter SemiBold, uppercase label style per brand guide */
+  .sh {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    color: var(--text-3);
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin: 36px 0 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+
+  .sh::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* ── SCOREBOARD METRICS ──────────────────────────── */
+  /* Brand primary yellow accent with black/dark bg treatment */
+  .metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px; margin-bottom: 28px;
+  }
+
+  .metric {
+    background: var(--score-bg);
+    border: 1.5px solid var(--score-border);
+    border-radius: 12px;
+    padding: 20px 20px 16px;
+    position: relative; overflow: hidden;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  /* Yellow top accent stripe — brand primary */
+  .metric::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: var(--yellow);
+    border-radius: 12px 12px 0 0;
+  }
+
+  /* Label: Inter 600, uppercase, 10px — UI label style */
+  .metric-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px; font-weight: 600;
+    color: var(--text-4);
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+  }
+
+  /* Value: Inter 700, large — scoreboard number */
+  .metric-val {
+    font-family: 'Inter', sans-serif;
+    font-size: 32px; font-weight: 700;
+    color: var(--yellow);
+    line-height: 1; margin-bottom: 6px; letter-spacing: -1px;
+  }
+
+  body.light .metric-val { color: #7A6500; }
+
+  .metric-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; color: var(--text-4); font-weight: 400;
+  }
+
+  /* ── CARDS ───────────────────────────────────────── */
+  .card {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px; margin-bottom: 14px;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  /* Card title: Inter 700 uppercase — brand UI label bold */
+  .card-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 700;
+    color: var(--yellow);
+    text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 10px;
+  }
+
+  body.light .card-title { color: #7A6500; }
+
+  /* Card body: Inter Regular 16px — brand body spec */
+  .card p {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; color: var(--text-3);
+    line-height: 1.75; font-weight: 400;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .two-col .card { margin-bottom: 0; }
+
+  /* ── HIGHLIGHT QUOTE ─────────────────────────────── */
+  .hl {
+    border-left: 3px solid var(--yellow);
+    background: var(--yellow-faint);
+    border-radius: 0 10px 10px 0;
+    padding: 16px 20px; margin: 22px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px; color: var(--text-2);
+    line-height: 1.75; font-style: italic; font-weight: 400;
+    transition: background 0.3s;
+  }
+
+  /* ── TABLE ───────────────────────────────────────── */
+  .tbl-wrap {
+    overflow-x: auto; margin-bottom: 20px;
+    border-radius: 10px; border: 1px solid var(--border);
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+
+  thead { background: var(--bg-2); }
+
+  /* Table header: Inter 600 uppercase 10px — brand UI label */
+  th {
+    text-align: left; padding: 11px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 10px; color: var(--text-4);
+    font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    border-bottom: 1px solid var(--border); white-space: nowrap;
+  }
+
+  /* Table body: Inter Regular 14px */
+  td {
+    padding: 12px 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; color: var(--text-3);
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle; line-height: 1.5; font-weight: 400;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--table-hover); }
+  td.em { color: var(--text); font-weight: 600; }
+
+  /* ── TAGS ────────────────────────────────────────── */
+  /* Brand pill tags — Inter 600 bold label per guide */
+  .tag {
+    display: inline-flex; align-items: center;
+    padding: 3px 10px; border-radius: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px; font-weight: 600;
+    white-space: nowrap; letter-spacing: 0.2px;
+  }
+
+  .t-amber { background: var(--tag-yellow-bg); color: var(--tag-yellow-text); border: 1px solid var(--tag-yellow-border); }
+  .t-green { background: var(--tag-green-bg);  color: var(--tag-green-text);  border: 1px solid var(--tag-green-border); }
+  .t-red   { background: var(--tag-red-bg);    color: var(--tag-red-text);    border: 1px solid var(--tag-red-border); }
+  .t-blue  { background: var(--tag-blue-bg);   color: var(--tag-blue-text);   border: 1px solid var(--tag-blue-border); }
+  .t-gray  { background: var(--tag-gray-bg);   color: var(--tag-gray-text);   border: 1px solid var(--tag-gray-border); }
+
+  /* ── PILLS ───────────────────────────────────────── */
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+
+  .pill {
+    background: var(--bg-2); border: 1px solid var(--border-2);
+    border-radius: 20px; padding: 5px 13px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; color: var(--text-3); font-weight: 400;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  /* ── FLOW ────────────────────────────────────────── */
+  .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin: 14px 0 20px; }
+
+  .flow-step {
+    background: var(--bg-2); border: 1px solid var(--border-2);
+    border-radius: 8px; padding: 9px 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px; color: var(--text-2); font-weight: 500;
+    text-align: center;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  /* Arrow: brand yellow */
+  .flow-arr { color: var(--yellow); font-size: 16px; padding: 0 2px; flex-shrink: 0; }
+  body.light .flow-arr { color: #7A6500; }
+
+  /* ── STATUS ROWS ─────────────────────────────────── */
+  .srow {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--srow-border);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; gap: 16px;
+    transition: border-color 0.3s;
+  }
+
+  .srow:last-child { border-bottom: none; }
+  .sl { color: var(--text-3); flex-shrink: 0; font-weight: 400; }
+  .sv { color: var(--text); font-weight: 600; text-align: right; }
+
+  /* ── TIMELINE ────────────────────────────────────── */
+  .timeline { margin-bottom: 28px; }
+
+  .tl-item { display: flex; gap: 18px; padding-bottom: 28px; position: relative; }
+
+  .tl-item::before {
+    content: ''; position: absolute;
+    left: 19px; top: 40px; bottom: 0;
+    width: 1px; background: var(--border-2);
+  }
+
+  .tl-item:last-child::before { display: none; }
+
+  /* Timeline dot: brand yellow fill treatment */
+  .tl-dot {
+    width: 38px; height: 38px; flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--score-bg); border: 1.5px solid var(--score-border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 700;
+    color: var(--yellow);
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  body.light .tl-dot { color: #7A6500; }
+
+  .tl-body { flex: 1; padding-top: 6px; }
+
+  .tl-phase {
+    font-family: 'Inter', sans-serif;
+    font-size: 10px; color: var(--yellow);
+    font-weight: 600; letter-spacing: 1.2px;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+
+  body.light .tl-phase { color: #7A6500; }
+
+  /* Timeline title: Inter SemiBold per brand heading spec */
+  .tl-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px; font-weight: 600;
+    color: var(--text); margin-bottom: 6px;
+  }
+
+  .tl-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; color: var(--text-3);
+    line-height: 1.7; font-weight: 400;
+  }
+
+  /* ── COMPETITOR CARDS ────────────────────────────── */
+  .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 14px 0; }
+
+  .comp-card {
+    background: var(--bg-1); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px;
+    transition: background 0.3s, border-color 0.3s;
+  }
+
+  /* Comp name: Inter SemiBold per heading spec */
+  .comp-name {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px; font-weight: 600;
+    color: var(--text); margin-bottom: 10px;
+  }
+
+  .comp-weak {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; color: var(--text-4); line-height: 1.6; margin-bottom: 8px; font-weight: 400;
+  }
+
+  /* Advantage: brand fintech green */
+  .comp-adv {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; color: var(--green); line-height: 1.6; font-weight: 500;
+  }
+
+  /* ── SCROLLBAR ───────────────────────────────────── */
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-4); }
+
+  /* ── RESPONSIVE ──────────────────────────────────── */
+  @media (max-width: 720px) {
+    :root { --sidebar-w: 0px; }
+    .sidebar { display: none; }
+    .content { padding: 28px 20px; }
+    .two-col { grid-template-columns: 1fr; }
+    .comp-grid { grid-template-columns: 1fr; }
+    .ph-title { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ LOCK ══════════════════ -->
+<div id="lock">
+  <div class="lock-logo">
+    <img src="data:image/png;base64,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" alt="Deebak" width="120" height="120" style="display:block;border-radius:22px;" />
+  </div>
+  <h1>Deebak · ديبك</h1>
+  <p>Intelligence Hub — Confidential Document. Enter your access code to continue.</p>
+  <div class="lock-form">
+    <input type="password" id="pwd" placeholder="••••••••••••" maxlength="24" autocomplete="off"/>
+    <button onclick="unlock()">Unlock Document</button>
+    <div id="lock-err"></div>
+  </div>
+  <div class="lock-footer">
+    <span>Version 0.1</span>
+    <div class="lock-dot"></div>
+    <span>April 22, 2026</span>
+    <div class="lock-dot"></div>
+    <span>Pre-Seed Stage</span>
+  </div>
+</div>
+
+<!-- ══════════════════ APP ══════════════════ -->
+<div id="app">
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="tb-left">
+      <div class="tb-wolf">
+        <img src="data:image/png;base64,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" alt="Deebak" width="32" height="32" style="display:block;border-radius:7px;" />
+      </div>
+      <span class="tb-name">Deebak</span>
+      <div class="tb-divider"></div>
+      <span class="tb-sub">Intelligence Hub</span>
+    </div>
+    <div class="tb-right">
+      <div class="tb-badge">v<span>0.1</span></div>
+      <div class="tb-date">Last updated: April 22, 2026</div>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light / dark mode" aria-label="Toggle theme">
+        <!-- Moon icon (shown in dark mode) -->
+        <svg class="icon-moon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <!-- Sun icon (shown in light mode) -->
+        <svg class="icon-sun" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="body-wrap">
+
+    <!-- SIDEBAR -->
+    <nav class="sidebar">
+      <div class="nav-section">Overview</div>
+      <a class="nav-item active" onclick="go('executive',this)"><span class="nav-num">01</span> Executive Summary</a>
+      <a class="nav-item" onclick="go('business',this)"><span class="nav-num">02</span> Business Model</a>
+
+      <div class="nav-section">Research</div>
+      <a class="nav-item" onclick="go('market',this)"><span class="nav-num">03</span> Market Research</a>
+      <a class="nav-item" onclick="go('competitors',this)"><span class="nav-num">04</span> Competitor Analysis</a>
+      <a class="nav-item" onclick="go('feasibility',this)"><span class="nav-num">05</span> Feasibility Study</a>
+
+      <div class="nav-section">Product</div>
+      <a class="nav-item" onclick="go('features',this)"><span class="nav-num">06</span> Features &amp; Flows</a>
+      <a class="nav-item" onclick="go('techspecs',this)"><span class="nav-num">07</span> Technical Specs</a>
+      <a class="nav-item" onclick="go('verification',this)"><span class="nav-num">08</span> Verification Logic</a>
+      <a class="nav-item" onclick="go('impact',this)"><span class="nav-num">08b</span> User Impact Model</a>
+
+      <div class="nav-section">Finance</div>
+      <a class="nav-item" onclick="go('pricing',this)"><span class="nav-num">09</span> Pricing Model</a>
+      <a class="nav-item" onclick="go('financial',this)"><span class="nav-num">10</span> Financial Projections</a>
+      <a class="nav-item" onclick="go('funding',this)"><span class="nav-num">11</span> Funding Ask</a>
+
+      <div class="nav-section">Execution</div>
+      <a class="nav-item" onclick="go('gtm',this)"><span class="nav-num">12</span> Go-To-Market</a>
+      <a class="nav-item" onclick="go('roadmap',this)"><span class="nav-num">13</span> Action Plan</a>
+
+      <div class="nav-section">Legal &amp; People</div>
+      <a class="nav-item" onclick="go('privacy',this)"><span class="nav-num">14</span> Data Privacy &amp; Legal</a>
+      <a class="nav-item" onclick="go('team',this)"><span class="nav-num">15</span> Team</a>
+
+      <div class="nav-section">Audit</div>
+      <a class="nav-item" onclick="go('analysis',this)"><span class="nav-num">16</span> Critical Analysis</a>
+    </nav>
+
+    <!-- CONTENT -->
+    <main class="content">
+
+      <!-- ── 01 EXECUTIVE SUMMARY ───────────────────── -->
+      <section class="page active" id="page-executive">
+        <div class="ph">
+          <div class="ph-tag">01 · Overview</div>
+          <div class="ph-title">Executive Summary</div>
+          <div class="ph-desc">Deebak (ديبك) is a verified micro-task platform connecting users across MENA with businesses seeking real, measurable engagement — replacing wasted ad spend with performance-based action.</div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric"><div class="metric-label">MENA Digital Ad Market</div><div class="metric-val">$6.25B</div><div class="metric-sub">2023 actual (IAB MENA)</div></div>
+          <div class="metric"><div class="metric-label">Digital Ad Fraud</div><div class="metric-val">20–30%</div><div class="metric-sub">of spend wasted (NEXD, 2025)</div></div>
+          <div class="metric"><div class="metric-label">Daily Ads / User</div><div class="metric-val">450+</div><div class="metric-sub">Zero return to user</div></div>
+          <div class="metric"><div class="metric-label">Daily Screentime</div><div class="metric-val">3.5h+</div><div class="metric-sub">MENA average</div></div>
+        </div>
+
+        <div class="hl">"What if attention had value — and that value went back to the user, while businesses paid only for real action?"</div>
+
+        <div class="sh">The Problem</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">For Businesses</div>
+            <p>20–30% of digital ad spend is lost to fraud and invalid traffic (NEXD, 2025), with additional waste from poor targeting and ad-blockers. No direct access to verified customer data. Middlemen extract margin. Impressions paid for, actions not guaranteed.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">For Users</div>
+            <p>450+ ads per day with zero financial return. 3.5+ hours of daily screen time monetized entirely by platforms — none of that value shared with the user who generates the attention.</p>
+          </div>
+        </div>
+
+        <div class="sh">The Solution</div>
+        <div class="card">
+          <div class="card-title">What is Deebak?</div>
+          <p>Deebak connects businesses with verified users through reward-based micro-tasks. Users complete actions — surveys, app installs, store visits, data collection — and earn credits redeemable as cash, crypto, or coupons. Businesses pay only per verified completion. Zero waste.</p>
+        </div>
+
+        <div class="sh">Mission &amp; Vision</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Mission</div>
+            <p>To return the economic value of human attention to the people who generate it, while giving businesses access to the highest-quality verified engagement in MENA.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Vision</div>
+            <p>To be the leading micro-task and verified engagement platform across MENA, Africa, and LATAM — building the infrastructure for the attention economy of the future.</p>
+          </div>
+        </div>
+
+        <div class="sh">Current Status</div>
+        <div class="card">
+          <div class="card-title">Traction</div>
+          <div class="srow"><span class="sl">MVP Status</span><span class="sv"><span class="tag t-green">Ready</span></span></div>
+          <div class="srow"><span class="sl">Business Interest Signals</span><span class="sv">10+ local companies &amp; organizations</span></div>
+          <div class="srow"><span class="sl">Payment Gateway Discussions</span><span class="sv"><span class="tag t-amber">In Progress</span></span></div>
+          <div class="srow"><span class="sl">Sharks Palestine</span><span class="sv"><span class="tag t-green">Positive Feedback</span></span></div>
+          <div class="srow"><span class="sl">TechStart Program</span><span class="sv"><span class="tag t-green">Positive Feedback</span></span></div>
+          <div class="srow"><span class="sl">Funding Stage</span><span class="sv">Pre-seed · Seeking $250,000</span></div>
+        </div>
+      </section>
+
+      <!-- ── 02 BUSINESS MODEL ─────────────────────── -->
+      <section class="page" id="page-business">
+        <div class="ph">
+          <div class="ph-tag">02 · Finance</div>
+          <div class="ph-title">Business Model</div>
+          <div class="ph-desc">Deebak operates a B2B Cost-Per-Action model where businesses pay only for verified task completions — not impressions or clicks.</div>
+        </div>
+
+        <div class="sh">Core Flow</div>
+        <div class="flow">
+          <div class="flow-step">Business posts campaign</div><div class="flow-arr">→</div>
+          <div class="flow-step">User accepts task</div><div class="flow-arr">→</div>
+          <div class="flow-step">User completes task</div><div class="flow-arr">→</div>
+          <div class="flow-step">Deebak verifies</div><div class="flow-arr">→</div>
+          <div class="flow-step">Credits issued</div><div class="flow-arr">→</div>
+          <div class="flow-step">Cash out / redeem</div>
+        </div>
+
+        <div class="sh">Revenue Streams</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Segment</th><th>What They Pay For</th><th>Revenue Type</th><th>Priority</th></tr></thead>
+          <tbody>
+            <tr><td class="em">Businesses</td><td>Task completions (surveys, installs, visits)</td><td>CPA commission (20–30%)</td><td><span class="tag t-amber">Primary</span></td></tr>
+            <tr><td class="em">NGOs / Gov</td><td>Community insights, awareness campaigns</td><td>Project-based fee</td><td><span class="tag t-gray">Secondary</span></td></tr>
+            <tr><td class="em">Users</td><td>Free — earn credits</td><td>Frozen balance recovery</td><td><span class="tag t-gray">Passive</span></td></tr>
+            <tr><td class="em">Partners</td><td>Financial &amp; crypto integrations</td><td>Transaction fees</td><td><span class="tag t-gray">Future</span></td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="sh">Credit &amp; Payout System</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Currency &amp; Pricing</div>
+            <p>Tasks priced initially in <strong style="color:var(--yellow)">ILS (₪)</strong>. USD and USDT (stablecoin) to follow. Verified users can transfer credits peer-to-peer within the platform once their wallet is unlocked.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Cash-out Channels</div>
+            <p>Local wallets (Jawwal Pay, CliQ), bank transfers. Crypto (USDT) as an alternative channel. Minimum withdrawal threshold defined during pilot phase.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Frozen Credits Mechanic</div>
+          <p>All earned credits are locked until KYC and personal info verification is complete. If a user remains inactive for 6+ months with unverified or unclaimed credits, those balances transfer to Deebak's central wallet — creating a passive revenue stream while incentivizing active verification and participation.</p>
+        </div>
+
+        <div class="sh">Client Trust Tiers</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Tier</th><th>Criteria</th><th>Campaign Review Process</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag t-green">Trusted</span></td><td>Verified identity, established history, clean record</td><td>Auto-approved with periodic spot checks</td></tr>
+            <tr><td><span class="tag t-blue">New</span></td><td>First campaigns, no platform history</td><td>Automated review + human sign-off required</td></tr>
+            <tr><td><span class="tag t-red">Suspicious</span></td><td>Anomalies detected, flags raised by system</td><td>Full human review, may be blocked or suspended</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- ── 03 MARKET RESEARCH ───────────────────── -->
+      <section class="page" id="page-market">
+        <div class="ph">
+          <div class="ph-tag">03 · Research</div>
+          <div class="ph-title">Market Research</div>
+          <div class="ph-desc">MENA is an underserved, high-growth market with massive ad spend, rising smartphone penetration, and a young population hungry for income-generating tools.</div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric"><div class="metric-label">Global Gig Economy</div><div class="metric-val">$582B</div><div class="metric-sub">2025, →$2.17T by 2034</div></div>
+          <div class="metric"><div class="metric-label">Rewards App Market</div><div class="metric-val">~$8B</div><div class="metric-sub">2024, 12% CAGR → $23B by 2033</div></div>
+          <div class="metric"><div class="metric-label">MENA Mobile Subscribers</div><div class="metric-val">459M</div><div class="metric-sub">est. 2025 (GSMA Intelligence)</div></div>
+          <div class="metric"><div class="metric-label">MENA Youth Unemployment</div><div class="metric-val">~22%</div><div class="metric-sub">North Africa avg, ILO 2024</div></div>
+        </div>
+
+        <div class="sh">Target Market Breakdown</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Market</th><th>Population</th><th>Smartphone Pen.</th><th>Phase</th></tr></thead>
+          <tbody>
+            <tr><td class="em">Palestine (West Bank + Gaza)</td><td>5.43M</td><td>82% mobile / 89% internet</td><td><span class="tag t-amber">Seed Market</span></td></tr>
+            <tr><td class="em">Jordan</td><td>11M</td><td>~85%</td><td><span class="tag t-amber">Phase 1</span></td></tr>
+            <tr><td class="em">Egypt</td><td>105M</td><td>~65%</td><td><span class="tag t-blue">Phase 2</span></td></tr>
+            <tr><td class="em">Saudi Arabia / UAE</td><td>45M+</td><td>~95%</td><td><span class="tag t-blue">Phase 2</span></td></tr>
+            <tr><td class="em">Africa / LATAM</td><td>1B+</td><td>Rapidly growing</td><td><span class="tag t-gray">Phase 3</span></td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="sh">Key Market Drivers</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Demand Side — Businesses</div>
+            <p>MENA digital ad spend reached <strong style="color:var(--yellow)">$6.25B in 2023</strong>, growing at 13.6% YoY (IAB MENA, 2024) and projected to hit $17.36B by 2029. With 20–30% of spend lost to fraud and invalid traffic, businesses urgently need cost-efficient, verifiable, direct-to-consumer engagement. Banks, telecoms, ISPs, and e-commerce are natural early clients.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Supply Side — Users</div>
+            <p><strong style="color:var(--yellow)">~22% youth unemployment</strong> in North Africa (ILO, 2024). Rising fintech adoption and mobile wallet use. Palestine alone has 82% mobile penetration and 89% internet penetration (DataReportal, 2024). Young population comfortable with gig-based, app-first income. High daily screentime (3.5h+ on social media) currently monetized entirely by platforms.</p>
+          </div>
+        </div>
+
+        <div class="hl">Deebak's core strategic advantage: access to verified personal data — income, profession, location, vehicle type — that is unavailable through any existing digital advertising channel in the region.</div>
+
+        <div class="sh">MENA-Specific Tailwinds</div>
+        <div class="pills">
+          <div class="pill">Jawwal Pay adoption rising in Palestine</div>
+          <div class="pill">CliQ expanding across Jordan</div>
+          <div class="pill">CBE fintech licensing framework (Egypt)</div>
+          <div class="pill">Arab youth = 60% of MENA population</div>
+          <div class="pill">Arabic-first apps severely underserved</div>
+          <div class="pill">Post-COVID gig economy normalization</div>
+          <div class="pill">Rising crypto acceptance in MENA</div>
+          <div class="pill">ISP &amp; telecom growth in West Bank</div>
+          <div class="pill">Bank of Palestine digital push</div>
+          <div class="pill">Ooredoo / Zain digital services expansion</div>
+        </div>
+      </section>
+
+      <!-- ── 04 COMPETITORS ──────────────────────────── -->
+      <section class="page" id="page-competitors">
+        <div class="ph">
+          <div class="ph-tag">04 · Research</div>
+          <div class="ph-title">Competitor Analysis</div>
+          <div class="ph-desc">Deebak competes globally with reward and survey platforms but holds a structural moat through deep localization, verified personal data, and real-world task verification.</div>
+        </div>
+
+        <div class="comp-grid">
+          <div class="comp-card">
+            <div class="comp-name">Swagbucks</div>
+            <div class="comp-weak">Focus: Online surveys only. Limited to digital tasks. No physical or hybrid actions. No MENA presence or Arabic support. US-centric payout methods.</div>
+            <div class="comp-adv">+ Deebak adds: Physical task types, GPS verification, Arabic-first UX, local ILS/JOD payment rails.</div>
+          </div>
+          <div class="comp-card">
+            <div class="comp-name">Toluna</div>
+            <div class="comp-weak">Focus: Online data collection. B2C only model with no B2B CPA structure. Not localized for MENA markets. No regional payment integrations.</div>
+            <div class="comp-adv">+ Deebak adds: Full B2B campaign engine, client management, KYC-backed data quality guarantee.</div>
+          </div>
+          <div class="comp-card">
+            <div class="comp-name">Honeygain</div>
+            <div class="comp-weak">Focus: Passive data sharing. No active user engagement or task economy. Low brand recognition in MENA. Minimal user interaction model.</div>
+            <div class="comp-adv">+ Deebak adds: Active task-based model, community referral engine, verified identity layer.</div>
+          </div>
+          <div class="comp-card">
+            <div class="comp-name">PollPay / Attapoll</div>
+            <div class="comp-weak">Focus: Simple surveys. Low payout rates. No local relevance or Arabic language support. No physical task types or location-based campaigns.</div>
+            <div class="comp-adv">+ Deebak adds: Localized MENA campaigns, crypto redemption, verified identity, GPS tasks.</div>
+          </div>
+        </div>
+
+        <div class="sh">Deebak's Structural Moat</div>
+        <div class="card">
+          <div class="card-title">Competitive Advantages</div>
+          <div class="srow"><span class="sl">Verified personal data</span><span class="sv">Income, profession, vehicle, location — unavailable elsewhere</span></div>
+          <div class="srow"><span class="sl">Local payment rails</span><span class="sv">Jawwal Pay, CliQ, bank transfers in ILS / JOD</span></div>
+          <div class="srow"><span class="sl">Arabic-first, RTL-native design</span><span class="sv">No competitor is genuinely built for Arabic UX</span></div>
+          <div class="srow"><span class="sl">Physical task verification</span><span class="sv">GPS geofencing + on-site QR code for real-world actions</span></div>
+          <div class="srow"><span class="sl">Local trust &amp; first-mover</span><span class="sv">Palestine-born team, local network, local launch market</span></div>
+        </div>
+
+        <div class="sh">Threat Assessment</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Threat</th><th>Likelihood</th><th>Mitigation Strategy</th></tr></thead>
+          <tbody>
+            <tr><td>Global player enters MENA</td><td><span class="tag t-amber">Medium</span></td><td>Deep local trust, verified data moat, first-mover network effects</td></tr>
+            <tr><td>Regional copy-cat launches</td><td><span class="tag t-red">High</span></td><td>Speed of execution, brand loyalty, referral-driven user lock-in</td></tr>
+            <tr><td>Platform regulation / shutdown</td><td><span class="tag t-amber">Medium</span></td><td>Early compliance posture, legal entity from day one</td></tr>
+            <tr><td>Low user retention</td><td><span class="tag t-amber">Medium</span></td><td>Referral engine, consistent task supply, gamification layer</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- ── 05 FEASIBILITY ──────────────────────────── -->
+      <section class="page" id="page-feasibility">
+        <div class="ph">
+          <div class="ph-tag">05 · Research</div>
+          <div class="ph-title">Feasibility Study</div>
+          <div class="ph-desc">An honest assessment of operational, regulatory, and market risks — and how Deebak plans to navigate each one.</div>
+        </div>
+
+        <div class="sh">Regulatory Landscape</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Country</th><th>Key Regulator</th><th>Concern</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="em">Palestine</td><td>PMA (Palestinian Monetary Authority)</td><td>Digital wallet licensing, data privacy law</td><td><span class="tag t-amber">Monitoring</span></td></tr>
+            <tr><td class="em">Jordan</td><td>CBJ (Central Bank of Jordan)</td><td>CliQ integration, fintech licensing</td><td><span class="tag t-gray">Planned</span></td></tr>
+            <tr><td class="em">Egypt</td><td>CBE (Central Bank of Egypt)</td><td>Fintech startup regime, CBE sandbox program</td><td><span class="tag t-gray">Future</span></td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="hl">Strategy: Launch and test with early users immediately. Seek compliance and licensing in parallel — not as a prerequisite. This is standard practice for early-stage fintech in emerging markets.</div>
+
+        <div class="sh">Risk Matrix</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Risk</th><th>Impact</th><th>Likelihood</th><th>Mitigation</th></tr></thead>
+          <tbody>
+            <tr><td>Chicken-and-egg (no tasks = no users)</td><td><span class="tag t-red">High</span></td><td><span class="tag t-red">High</span></td><td>Seed with affiliate rewards + pre-signed business clients before launch</td></tr>
+            <tr><td>User fraud / fake task completions</td><td><span class="tag t-red">High</span></td><td><span class="tag t-amber">Medium</span></td><td>KYC + device fingerprinting + AI anomaly detection + human review</td></tr>
+            <tr><td>Business campaign fraud</td><td><span class="tag t-amber">Medium</span></td><td><span class="tag t-amber">Medium</span></td><td>Client trust tiers + campaign pre-approval workflow</td></tr>
+            <tr><td>Regulatory shutdown</td><td><span class="tag t-red">High</span></td><td><span class="tag t-gray">Low</span></td><td>Legal entity + compliance counsel from day one</td></tr>
+            <tr><td>Cash-out liquidity issues</td><td><span class="tag t-amber">Medium</span></td><td><span class="tag t-amber">Medium</span></td><td>Credit lock mechanics + payment gateway pre-integration</td></tr>
+            <tr><td>User drop-off after onboarding</td><td><span class="tag t-amber">Medium</span></td><td><span class="tag t-amber">Medium</span></td><td>Gamification, tiered rewards, consistent new task supply</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="sh">Pilot Phase Assumptions</div>
+        <div class="card">
+          <div class="card-title">Key Metrics &amp; Assumptions</div>
+          <div class="srow"><span class="sl">Avg. task completion rate</span><span class="sv">60–70% of accepted tasks</span></div>
+          <div class="srow"><span class="sl">Avg. task value to Doer</span><span class="sv">₪2–15 per task</span></div>
+          <div class="srow"><span class="sl">Deebak take rate</span><span class="sv">20–30% of task value</span></div>
+          <div class="srow"><span class="sl">KYC completion rate</span><span class="sv">Target 50%+ of signups within 7 days</span></div>
+          <div class="srow"><span class="sl">Referral conversion</span><span class="sv">1 user invites avg. 3 contacts</span></div>
+          <div class="srow"><span class="sl">Frozen balance recovery</span><span class="sv">~15% of all issued credits (passive revenue)</span></div>
+        </div>
+      </section>
+
+      <!-- ── 06 FEATURES ────────────────────────────── -->
+      <section class="page" id="page-features">
+        <div class="ph">
+          <div class="ph-tag">06 · Product</div>
+          <div class="ph-title">Features &amp; Flows</div>
+          <div class="ph-desc">Three separate products: a mobile app for Doers, a web portal for Business clients, and a web-based Super Admin console — each with a distinct interface and purpose.</div>
+        </div>
+
+        <div class="sh">Product 1 — Doer Mobile App</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Onboarding</div>
+            <p>Splash → language select (EN/AR) → signup via phone OTP → personal info collection (name, national ID, income, profession, university, location, vehicle type) → KYC verification → credit unlock.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Home Screen</div>
+            <p>Personalized greeting, wallet balance overview (locked vs. unlocked), nearby tasks list, refer &amp; earn widget, daily task suggestions, push notification center.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Tasks Screen</div>
+            <p>Browse available tasks, filter by type/reward/distance, map view for physical tasks, task detail page, accept → complete → submit proof flow, task history.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Wallet Screen</div>
+            <p>Balance overview (locked/unlocked), full transaction history, peer-to-peer transfers, QR pay, cash-out options (bank, Jawwal Pay, CliQ, USDT), redemption codes.</p>
+          </div>
+        </div>
+
+        <div class="sh">Product 2 — Business Web Portal</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Campaign Builder</div>
+            <p>Create task campaigns (survey, install, visit, data collection), set target audience by verified profile attributes, set reward per completion, set total budget cap, schedule start/end dates.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Analytics Dashboard</div>
+            <p>Real-time completion tracking, demographic breakdowns by verified attributes, cost per action, campaign ROI, audience insights from verified user data, exportable reports.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Billing &amp; Wallet</div>
+            <p>Top up campaign balance via bank transfer or card, view full spend history, download invoices, manage payment methods, set spend alerts.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Account Management</div>
+            <p>Company profile, team member access levels, trust tier status, compliance document uploads, support ticket access, API key management (future).</p>
+          </div>
+        </div>
+
+        <div class="sh">Product 3 — Super Admin Console</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Platform Overview</div>
+            <p>Real-time KPIs: active users, task completions, revenue, fraud flags, pending KYC verifications, campaign approval queue, system health.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">User Management</div>
+            <p>View/search all Doers, review KYC submissions, approve/reject/suspend accounts, override credit locks, audit individual user activity logs.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Campaign Moderation</div>
+            <p>Review and approve new client campaigns, manage client trust tiers, monitor task completion anomalies, escalate or block suspicious campaigns.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Financial Control</div>
+            <p>Monitor all platform transactions, manage frozen balance transfers to central wallet, oversee payout queue, view central wallet balance, generate financial reports.</p>
+          </div>
+        </div>
+
+        <div class="sh">Task Types</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Task Type</th><th>Example (MENA Context)</th><th>Verification Method</th></tr></thead>
+          <tbody>
+            <tr><td class="em">Survey / Quiz</td><td>Brand awareness survey for Jawwal / Ooredoo</td><td>Completion tracking + time-on-task analysis</td></tr>
+            <tr><td class="em">App Install</td><td>Install &amp; open Bank of Palestine mobile app</td><td>Referral deeplink + app open event tracking</td></tr>
+            <tr><td class="em">Store Visit</td><td>Visit a Zain branch in Ramallah</td><td>GPS geofence entry + on-site QR code scan</td></tr>
+            <tr><td class="em">Data Collection</td><td>Submit grocery receipt photo from local market</td><td>Image upload + AI content validation</td></tr>
+            <tr><td class="em">Social Action</td><td>Follow &amp; engage with a brand's social page</td><td>OAuth token verification + engagement event</td></tr>
+            <tr><td class="em">Product Trial</td><td>Try a free ISP service for 7 days (Hadara/Fusion)</td><td>API session data + engagement depth check</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- ── 07 TECH SPECS ───────────────────────────── -->
+      <section class="page" id="page-techspecs">
+        <div class="ph">
+          <div class="ph-tag">07 · Product</div>
+          <div class="ph-title">Technical Specifications</div>
+          <div class="ph-desc">Architecture overview, technology stack, and core system design decisions for all three Deebak products.</div>
+        </div>
+
+        <div class="sh">Technology Stack</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Doer Mobile App</div>
+            <div class="pills">
+              <div class="pill">React Native</div><div class="pill">TypeScript</div>
+              <div class="pill">Expo</div><div class="pill">NativeWind</div>
+              <div class="pill">Zustand</div><div class="pill">i18n (EN/AR)</div>
+              <div class="pill">React Navigation</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Business + Admin Portals</div>
+            <div class="pills">
+              <div class="pill">React + TypeScript</div><div class="pill">Vite</div>
+              <div class="pill">Tailwind CSS</div><div class="pill">Shadcn/UI</div>
+              <div class="pill">Recharts</div><div class="pill">React Query</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Backend</div>
+            <div class="pills">
+              <div class="pill">Node.js + Express</div><div class="pill">PostgreSQL</div>
+              <div class="pill">Redis</div><div class="pill">REST API</div>
+              <div class="pill">JWT Auth</div><div class="pill">AWS S3</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Infrastructure</div>
+            <div class="pills">
+              <div class="pill">AWS / Railway</div><div class="pill">Cloudflare CDN</div>
+              <div class="pill">Firebase (Push)</div><div class="pill">Sentry</div>
+              <div class="pill">GitHub Actions CI/CD</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sh">KYC &amp; Identity Flow</div>
+        <div class="flow">
+          <div class="flow-step">Phone OTP</div><div class="flow-arr">→</div>
+          <div class="flow-step">Personal info form</div><div class="flow-arr">→</div>
+          <div class="flow-step">ID upload (front + back)</div><div class="flow-arr">→</div>
+          <div class="flow-step">Selfie liveness check</div><div class="flow-arr">→</div>
+          <div class="flow-step">Auto review</div><div class="flow-arr">→</div>
+          <div class="flow-step">Admin review (if flagged)</div><div class="flow-arr">→</div>
+          <div class="flow-step">Credits unlocked</div>
+        </div>
+
+        <div class="sh">Core Data Model</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Entity</th><th>Key Attributes</th></tr></thead>
+          <tbody>
+            <tr><td class="em" style="color:var(--yellow)">User (Doer)</td><td>id, name_ar, name_en, phone, national_id, kyc_status, credit_balance, locked_balance, profile_data, device_id</td></tr>
+            <tr><td class="em" style="color:var(--yellow)">Business (Client)</td><td>id, company_name, trust_tier, wallet_balance, contact_info, kyb_status, campaign_count</td></tr>
+            <tr><td class="em" style="color:var(--yellow)">Campaign</td><td>id, client_id, task_type, reward_amount, budget_cap, status, target_criteria, completions_count, start_date, end_date</td></tr>
+            <tr><td class="em" style="color:var(--yellow)">Task Completion</td><td>id, user_id, campaign_id, proof_data, verification_status, reward_issued, fraud_score, timestamp</td></tr>
+            <tr><td class="em" style="color:var(--yellow)">Transaction</td><td>id, user_id, type, amount, currency, status, reference, gateway, created_at</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- ── 08 VERIFICATION ────────────────────────── -->
+      <section class="page" id="page-verification">
+        <div class="ph">
+          <div class="ph-tag">08 · Product</div>
+          <div class="ph-title">Verification Logic</div>
+          <div class="ph-desc">Deebak's anti-fraud and task verification system — the trust engine that makes the CPA model credible and valuable to business clients.</div>
+        </div>
+
+        <div class="sh">Verification Layers</div>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot">1</div>
+            <div class="tl-body">
+              <div class="tl-phase">Layer 1 — Identity</div>
+              <div class="tl-title">KYC &amp; Profile Verification</div>
+              <div class="tl-desc">Phone OTP, national ID scan, selfie liveness check, personal data verification. Required before any reward can be withdrawn. Prevents fake account farms and bot signups. High-value users (complete profiles) get access to better-paying tasks.</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">2</div>
+            <div class="tl-body">
+              <div class="tl-phase">Layer 2 — Device</div>
+              <div class="tl-title">Device Fingerprinting &amp; App Permissions</div>
+              <div class="tl-desc">One account per device enforced. App requires camera, location, and notification permissions as a condition of use. Device ID, OS version, and app signature tracked. Rooted or emulated devices are flagged and blocked automatically.</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">3</div>
+            <div class="tl-body">
+              <div class="tl-phase">Layer 3 — Behavioral</div>
+              <div class="tl-title">Task-Level Proof Collection</div>
+              <div class="tl-desc">Per task type: surveys use time-on-screen + response pattern analysis; installs use deeplink + app open event; store visits use GPS geofence + on-site QR scan; data collection uses image AI validation; social actions use OAuth token verification.</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">4</div>
+            <div class="tl-body">
+              <div class="tl-phase">Layer 4 — Analytics</div>
+              <div class="tl-title">Pattern &amp; Anomaly Detection</div>
+              <div class="tl-desc">ML-based anomaly detection on completion velocity, location clustering, reward withdrawal patterns. Users completing tasks too fast, from the same GPS coordinates as others, or with identical response patterns are automatically flagged for review.</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">5</div>
+            <div class="tl-body">
+              <div class="tl-phase">Layer 5 — Human Review</div>
+              <div class="tl-title">Admin Escalation Queue</div>
+              <div class="tl-desc">Flagged completions route to the Super Admin review queue. Human reviewer approves or rejects. Repeated violations result in account suspension and credit forfeiture. Businesses are notified of any completions that fail final review.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sh">Verification Matrix</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Task Type</th><th>Primary Proof</th><th>Secondary Check</th><th>Fraud Risk</th></tr></thead>
+          <tbody>
+            <tr><td>Survey</td><td>Completion event + time-on-task</td><td>Response quality &amp; pattern analysis</td><td><span class="tag t-green">Low</span></td></tr>
+            <tr><td>App Install</td><td>Deeplink referral + app open event</td><td>Session duration threshold check</td><td><span class="tag t-green">Low</span></td></tr>
+            <tr><td>Store Visit</td><td>GPS geofence entry confirmation</td><td>On-site QR code scan required</td><td><span class="tag t-amber">Medium</span></td></tr>
+            <tr><td>Data Collection</td><td>Photo / form submission</td><td>AI content validation + metadata check</td><td><span class="tag t-amber">Medium</span></td></tr>
+            <tr><td>Social Action</td><td>OAuth token verification</td><td>Engagement event depth tracking</td><td><span class="tag t-amber">Medium</span></td></tr>
+            <tr><td>Product Trial</td><td>API session data from partner</td><td>Engagement depth + duration check</td><td><span class="tag t-red">High</span></td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- ── 09 FINANCIAL ───────────────────────────── -->
+      <section class="page" id="page-financial">
+        <div class="ph">
+          <div class="ph-tag">09 · Finance</div>
+          <div class="ph-title">Financial Projections</div>
+          <div class="ph-desc">Commission-based revenue model with sustainable growth anchored in verified user base expansion and diversified business client acquisition.</div>
+        </div>
+
+        <div class="sh">3-Year Projection</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Year</th><th>Active Users</th><th>Business Clients</th><th>Revenue (USD)</th><th>Net Margin</th></tr></thead>
+          <tbody>
+            <tr><td class="em" style="color:var(--yellow)">Year 1</td><td>20,000</td><td>30</td><td>$50,000</td><td>10%</td></tr>
+            <tr><td class="em" style="color:var(--yellow)">Year 2</td><td>100,000</td><td>100</td><td>$350,000</td><td>25%</td></tr>
+            <tr><td class="em" style="color:var(--yellow)">Year 3</td><td>500,000</td><td>400</td><td>$1,500,000</td><td>35%</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="sh">Revenue Breakdown — Year 1 Estimate</div>
+        <div class="metrics">
+          <div class="metric"><div class="metric-label">CPA Commissions</div><div class="metric-val">~70%</div><div class="metric-sub">Core B2B revenue</div></div>
+          <div class="metric"><div class="metric-label">NGO / Gov Projects</div><div class="metric-val">~20%</div><div class="metric-sub">Community campaigns</div></div>
+          <div class="metric"><div class="metric-label">Frozen Credits</div><div class="metric-val">~7%</div><div class="metric-sub">Inactive user balances</div></div>
+          <div class="metric"><div class="metric-label">Transaction Fees</div><div class="metric-val">~3%</div><div class="metric-sub">Payment integrations</div></div>
+        </div>
+
+        <div class="sh">Unit Economics — Pilot Phase</div>
+        <div class="card">
+          <div class="card-title">Key Metrics</div>
+          <div class="srow"><span class="sl">Avg. task value to business</span><span class="sv">₪10–50 per verified completion</span></div>
+          <div class="srow"><span class="sl">Avg. Doer reward per task</span><span class="sv">₪2–15</span></div>
+          <div class="srow"><span class="sl">Deebak take rate</span><span class="sv">20–30% of total task value</span></div>
+          <div class="srow"><span class="sl">Estimated tasks per user / month</span><span class="sv">8–15 tasks</span></div>
+          <div class="srow"><span class="sl">Estimated monthly revenue per client</span><span class="sv">$500–$5,000</span></div>
+          <div class="srow"><span class="sl">Target CAC (via referral engine)</span><span class="sv">&lt;$1 per verified user</span></div>
+        </div>
+      </section>
+
+      <!-- ── 10 FUNDING ─────────────────────────────── -->
+      <section class="page" id="page-funding">
+        <div class="ph">
+          <div class="ph-tag">10 · Finance</div>
+          <div class="ph-title">Funding Ask</div>
+          <div class="ph-desc">Seeking $250,000 in pre-seed funding to finalize the MVP, launch the pilot, acquire first users and clients, and achieve product-market fit within 12 months.</div>
+        </div>
+
+        <div class="metrics">
+          <div class="metric"><div class="metric-label">Raise Amount</div><div class="metric-val">$250K</div><div class="metric-sub">Pre-seed round</div></div>
+          <div class="metric"><div class="metric-label">Runway</div><div class="metric-val">12 mo</div><div class="metric-sub">To product-market fit</div></div>
+          <div class="metric"><div class="metric-label">Target Users Y1</div><div class="metric-val">20K</div><div class="metric-sub">Verified Doers</div></div>
+          <div class="metric"><div class="metric-label">Target Clients Y1</div><div class="metric-val">30</div><div class="metric-sub">Paying businesses</div></div>
+        </div>
+
+        <div class="sh">Allocation</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Category</th><th>%</th><th>Amount</th><th>Use of Funds</th></tr></thead>
+          <tbody>
+            <tr><td class="em">Product Development</td><td>40%</td><td>$100,000</td><td>Mobile app, backend, business portal, admin console</td></tr>
+            <tr><td class="em">Marketing &amp; Partnerships</td><td>25%</td><td>$62,500</td><td>Affiliate campaign, brand, client sales, local partnerships</td></tr>
+            <tr><td class="em">Operations &amp; Staff</td><td>20%</td><td>$50,000</td><td>Core team salaries (12 months), admin overhead</td></tr>
+            <tr><td class="em">Legal, Hosting &amp; Compliance</td><td>15%</td><td>$37,500</td><td>Legal entity, licenses, cloud infrastructure, data compliance</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="hl">Ideal investor profile: MENA-focused angel or micro-VC with fintech or gig economy experience. Strategic value — network into banks, telecoms, or payment gateways — is weighted alongside capital.</div>
+      </section>
+
+      <!-- ── 11 GTM ──────────────────────────────────── -->
+      <section class="page" id="page-gtm">
+        <div class="ph">
+          <div class="ph-tag">11 · Execution</div>
+          <div class="ph-title">Go-To-Market Strategy</div>
+          <div class="ph-desc">A dual-sided acquisition strategy: viral referral engine for Doers, direct sales for business clients — launching from Palestine and expanding through MENA.</div>
+        </div>
+
+        <div class="sh">Doer Acquisition — Referral Engine</div>
+        <div class="card">
+          <div class="card-title">How It Works</div>
+          <p>Users invite contacts via a shareable link or code. Both parties earn credits upon successful signup. Rewards remain locked until KYC verification is complete — ensuring only real, verified users count toward the growth metric. Target: viral coefficient &gt;1 in pilot communities.</p>
+        </div>
+        <div class="flow">
+          <div class="flow-step">User signs up</div><div class="flow-arr">→</div>
+          <div class="flow-step">Gets referral code</div><div class="flow-arr">→</div>
+          <div class="flow-step">Shares with contacts</div><div class="flow-arr">→</div>
+          <div class="flow-step">Friend signs up</div><div class="flow-arr">→</div>
+          <div class="flow-step">Both earn credits</div><div class="flow-arr">→</div>
+          <div class="flow-step">Locked until KYC</div>
+        </div>
+
+        <div class="sh">Business Acquisition — Direct Sales</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Priority Client Verticals</div>
+            <div class="pills">
+              <div class="pill">Banks (BOP, Arab Bank)</div>
+              <div class="pill">Telecoms (Jawwal, Ooredoo)</div>
+              <div class="pill">ISPs (Hadara, Fusion)</div>
+              <div class="pill">Mobile apps</div>
+              <div class="pill">E-commerce platforms</div>
+              <div class="pill">FMCG / Retail chains</div>
+              <div class="pill">NGOs &amp; Government</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Sales Approach</div>
+            <p>Direct outreach with a pilot-price offer — a fraction of standard CPA rates — to validate the model and collect early case studies. Convert pilots to full contracts at standard pricing after proven results. Leverage positive feedback from Sharks Palestine and TechStart as social proof.</p>
+          </div>
+        </div>
+
+        <div class="sh">Expansion Roadmap</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Phase</th><th>Market</th><th>Timeline</th><th>Launch Trigger</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag t-amber">Phase 0</span></td><td>Palestine — Ramallah, Nablus, Hebron</td><td>Now → Month 6</td><td>MVP launch, first 5,000 users</td></tr>
+            <tr><td><span class="tag t-amber">Phase 1</span></td><td>Palestine full coverage + Jordan</td><td>Month 6–18</td><td>20,000 users, 30 paying clients</td></tr>
+            <tr><td><span class="tag t-blue">Phase 2</span></td><td>Egypt + Gulf (KSA / UAE)</td><td>Month 18–36</td><td>100,000 users, Series A close</td></tr>
+            <tr><td><span class="tag t-gray">Phase 3</span></td><td>Africa + LATAM</td><td>Year 3+</td><td>500,000 users, proven scalable model</td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- ── 12 ROADMAP ─────────────────────────────── -->
+      <section class="page" id="page-roadmap">
+        <div class="ph">
+          <div class="ph-tag">12 · Execution</div>
+          <div class="ph-title">Action Plan &amp; Roadmap</div>
+          <div class="ph-desc">Phased execution plan from pre-seed to scale — with clear milestones, deliverables, and success criteria at each stage.</div>
+        </div>
+
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot">0</div>
+            <div class="tl-body">
+              <div class="tl-phase">Pre-seed · Now → Month 2</div>
+              <div class="tl-title">Foundation &amp; Fundraising</div>
+              <div class="tl-desc">Close $250K pre-seed round. Finalize legal entity in Palestine. Lock 3–5 pilot business clients (bank, telecom, or ISP). Complete Doer mobile app MVP and internal beta with team and extended network.</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">1</div>
+            <div class="tl-body">
+              <div class="tl-phase">Pilot · Month 2 → Month 6</div>
+              <div class="tl-title">West Bank Launch</div>
+              <div class="tl-desc">Launch referral campaign targeting Ramallah, Nablus, and Hebron. Onboard first 5,000 Doers. Run first 10 live campaigns with pilot clients. Collect verification data, measure fraud rates, and tune the detection algorithm.</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">2</div>
+            <div class="tl-body">
+              <div class="tl-phase">Growth · Month 6 → Month 12</div>
+              <div class="tl-title">Scale Palestine + Enter Jordan</div>
+              <div class="tl-desc">Reach 20,000 verified Doers. Onboard 30 paying business clients. Launch Business Portal publicly. Integrate Jawwal Pay and CliQ. Begin Jordan market entry with local partnership and CliQ payment integration.</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">3</div>
+            <div class="tl-body">
+              <div class="tl-phase">Series A Prep · Month 12 → Month 18</div>
+              <div class="tl-title">Product-Market Fit &amp; Data Story</div>
+              <div class="tl-desc">Reach 100,000 users across Palestine and Jordan. 100 active business clients generating $350K ARR. Build verified MENA user data asset narrative. Begin Series A investor conversations with traction metrics.</div>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot">4</div>
+            <div class="tl-body">
+              <div class="tl-phase">Expansion · Month 18 → Month 36</div>
+              <div class="tl-title">MENA Scale</div>
+              <div class="tl-desc">Enter Egypt and Gulf markets. 500,000 users across MENA. 400 business clients. $1.5M revenue. Explore Africa and LATAM partnerships. Evaluate enterprise data API product for large-scale clients.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sh">Immediate Next Actions</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>#</th><th>Action</th><th>Owner</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td class="em" style="color:var(--yellow)">1</td><td>Finalize Doer mobile app MVP (Replit)</td><td>Tech Team</td><td><span class="tag t-amber">In Progress</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">2</td><td>Sign 3 pilot business clients (banks / telecoms)</td><td>Founders</td><td><span class="tag t-amber">In Progress</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">3</td><td>Close pre-seed funding round ($250K)</td><td>Founders</td><td><span class="tag t-amber">Active</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">4</td><td>Legal entity registration (Palestine)</td><td>Founders</td><td><span class="tag t-gray">Planned</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">5</td><td>Jawwal Pay payment gateway integration</td><td>Tech Team</td><td><span class="tag t-gray">Planned</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">6</td><td>Build Business Web Portal</td><td>Design + Dev</td><td><span class="tag t-blue">Next</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">7</td><td>Build Super Admin Console</td><td>Design + Dev</td><td><span class="tag t-blue">Next</span></td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+      <!-- ── 08b USER IMPACT MODEL ──────────────────────── -->
+      <section class="page" id="page-impact">
+        <div class="ph">
+          <div class="ph-tag">08b · Product · User Demonstration</div>
+          <div class="ph-title">User Impact Model</div>
+          <div class="ph-desc">How much does Deebak actually change the financial reality of a typical Palestinian user? This section models the monthly earnings impact for a target user whose daily budget ranges between ₪30–₪50 ILS, using realistic task availability and an average 65% fulfillment rate.</div>
+        </div>
+
+        <!-- ASSUMPTIONS BOX -->
+        <div class="sh">Model Assumptions</div>
+        <div class="card">
+          <div class="card-title">Baseline Parameters</div>
+          <div class="srow"><span class="sl">Target user daily budget</span><span class="sv">₪30–₪50 / day (₪900–₪1,500 / month)</span></div>
+          <div class="srow"><span class="sl">Tasks available per day (verified user)</span><span class="sv">4 tasks avg. (mix of types)</span></div>
+          <div class="srow"><span class="sl">Average fulfillment rate</span><span class="sv"><strong style="color:var(--yellow)">65%</strong> — based on time availability and task relevance</span></div>
+          <div class="srow"><span class="sl">Tasks completed per day</span><span class="sv">2.6 tasks/day</span></div>
+          <div class="srow"><span class="sl">Tasks completed per month</span><span class="sv">~78 tasks/month</span></div>
+          <div class="srow"><span class="sl">Task mix assumed</span><span class="sv">40% surveys · 30% installs · 20% social · 10% store visits</span></div>
+          <div class="srow"><span class="sl">Average time per task</span><span class="sv">5–15 minutes</span></div>
+          <div class="srow"><span class="sl">Total time invested / month</span><span class="sv">~8–20 hours (0.3–0.7h per day)</span></div>
+        </div>
+
+        <!-- MONTHLY EARNINGS BREAKDOWN -->
+        <div class="sh">Monthly Earnings — Task Type Breakdown</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Task Type</th><th>Tasks/Month</th><th>Avg. Reward</th><th>Monthly Earnings</th><th>% of Total</th></tr></thead>
+          <tbody>
+            <tr><td class="em">Surveys &amp; Quizzes</td><td>31</td><td>₪4.00</td><td style="color:var(--yellow);font-weight:600;">₪124</td><td>17.7%</td></tr>
+            <tr><td class="em">App Installs + Open</td><td>23</td><td>₪11.25</td><td style="color:var(--yellow);font-weight:600;">₪259</td><td>37.0%</td></tr>
+            <tr><td class="em">Social Actions</td><td>16</td><td>₪6.00</td><td style="color:var(--yellow);font-weight:600;">₪94</td><td>13.4%</td></tr>
+            <tr><td class="em">Store Visits (GPS)</td><td>8</td><td>₪28.00</td><td style="color:var(--yellow);font-weight:600;">₪224</td><td>32.0%</td></tr>
+            <tr style="background:var(--score-bg);border-top:1px solid var(--score-border);">
+              <td class="em" style="font-weight:700;">TOTAL</td>
+              <td style="font-weight:700;">78</td>
+              <td style="color:var(--text-3);">—</td>
+              <td style="color:var(--yellow);font-weight:800;font-size:16px;">₪701 / month</td>
+              <td style="font-weight:700;">100%</td>
+            </tr>
+          </tbody>
+        </table></div>
+
+        <!-- BUDGET IMPACT SCENARIOS -->
+        <div class="sh">Budget Impact — Three User Scenarios</div>
+
+        <!-- Impact bars -->
+        <style>
+          .impact-scenario {
+            background: var(--bg-1);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 26px;
+            margin-bottom: 14px;
+          }
+          .impact-top {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
+          }
+          .impact-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px; font-weight: 600; color: var(--text);
+          }
+          .impact-sublabel { font-size: 12px; color: var(--text-3); font-weight:400; margin-top:2px; }
+          .impact-boost {
+            font-family: 'Inter', sans-serif;
+            font-size: 22px; font-weight: 700;
+            color: var(--yellow);
+          }
+          body.light .impact-boost { color: #7A6500; }
+          .impact-boost-label { font-size: 11px; color: var(--text-3); text-align:right; margin-top:2px; font-weight:400; }
+          .bar-wrap {
+            background: var(--bg-2);
+            border-radius: 8px; height: 36px;
+            position: relative; overflow: hidden;
+            margin-bottom: 10px;
+          }
+          .bar-base {
+            position: absolute; left: 0; top: 0; bottom: 0;
+            background: var(--bg-3);
+            border-radius: 8px;
+            display: flex; align-items: center;
+            padding-left: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px; font-weight: 600; color: var(--text-3);
+            white-space: nowrap;
+            transition: width 0.5s ease;
+          }
+          .bar-deebak {
+            position: absolute; top: 0; bottom: 0;
+            background: var(--yellow);
+            border-radius: 0 8px 8px 0;
+            display: flex; align-items: center;
+            padding-left: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 11px; font-weight: 700; color: #000;
+            white-space: nowrap;
+            transition: width 0.5s ease;
+          }
+          .bar-labels {
+            display: flex; justify-content: space-between;
+            font-size: 11px; color: var(--text-3); margin-top: 6px;
+          }
+          .bar-new { color: var(--yellow); font-weight: 700; }
+          body.light .bar-new { color: #7A6500; }
+          .impact-items {
+            display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;
+          }
+          .impact-item {
+            background: var(--bg-2);
+            border: 1px solid var(--border-2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 12px; color: var(--text-3);
+          }
+          .impact-item strong { color: var(--text); display:block; font-size:13px; margin-bottom:2px; }
+        </style>
+
+        <!-- Scenario 1: ₪30/day -->
+        <div class="impact-scenario">
+          <div class="impact-top">
+            <div>
+              <div class="impact-label">Conservative User — ₪30/day budget</div>
+              <div class="impact-sublabel">Monthly budget: ₪900 · Student, part-time worker, young adult</div>
+            </div>
+            <div>
+              <div class="impact-boost">+77.9%</div>
+              <div class="impact-boost-label">purchasing power boost</div>
+            </div>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar-base" style="width:56%;">₪900 base budget</div>
+            <div class="bar-deebak" style="left:56%;width:44%;">+ ₪701 Deebak</div>
+          </div>
+          <div class="bar-labels">
+            <span>₪0</span>
+            <span>₪900 (base)</span>
+            <span class="bar-new">₪1,601 / month total</span>
+          </div>
+          <div class="impact-items">
+            <div class="impact-item"><strong>Extra ₪701</strong> covers 87 falafel sandwiches</div>
+            <div class="impact-item"><strong>Mobile data</strong> 46 months of 1GB top-ups</div>
+            <div class="impact-item"><strong>Transport</strong> 233 bus trips covered</div>
+            <div class="impact-item"><strong>Groceries</strong> 17 additional days of food</div>
+          </div>
+        </div>
+
+        <!-- Scenario 2: ₪40/day -->
+        <div class="impact-scenario">
+          <div class="impact-top">
+            <div>
+              <div class="impact-label">Average User — ₪40/day budget</div>
+              <div class="impact-sublabel">Monthly budget: ₪1,200 · Entry-level employee, small family</div>
+            </div>
+            <div>
+              <div class="impact-boost">+58.4%</div>
+              <div class="impact-boost-label">purchasing power boost</div>
+            </div>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar-base" style="width:63%;">₪1,200 base budget</div>
+            <div class="bar-deebak" style="left:63%;width:37%;">+ ₪701</div>
+          </div>
+          <div class="bar-labels">
+            <span>₪0</span>
+            <span>₪1,200 (base)</span>
+            <span class="bar-new">₪1,901 / month total</span>
+          </div>
+          <div class="impact-items">
+            <div class="impact-item"><strong>Extra ₪701</strong> = 58% salary supplement</div>
+            <div class="impact-item"><strong>Electricity bill</strong> avg. ₪150/mo · covered 4.7×</div>
+            <div class="impact-item"><strong>School supplies</strong> 2–3 months covered</div>
+            <div class="impact-item"><strong>Internet bill</strong> avg. ₪120/mo · covered 5.8×</div>
+          </div>
+        </div>
+
+        <!-- Scenario 3: ₪50/day -->
+        <div class="impact-scenario">
+          <div class="impact-top">
+            <div>
+              <div class="impact-label">Higher-Budget User — ₪50/day budget</div>
+              <div class="impact-sublabel">Monthly budget: ₪1,500 · Mid-income household, professional</div>
+            </div>
+            <div>
+              <div class="impact-boost">+46.7%</div>
+              <div class="impact-boost-label">purchasing power boost</div>
+            </div>
+          </div>
+          <div class="bar-wrap">
+            <div class="bar-base" style="width:68%;">₪1,500 base budget</div>
+            <div class="bar-deebak" style="left:68%;width:32%;">+ ₪701</div>
+          </div>
+          <div class="bar-labels">
+            <span>₪0</span>
+            <span>₪1,500 (base)</span>
+            <span class="bar-new">₪2,201 / month total</span>
+          </div>
+          <div class="impact-items">
+            <div class="impact-item"><strong>Extra ₪701</strong> = meaningful discretionary income</div>
+            <div class="impact-item"><strong>Car fuel</strong> avg. ₪300/fill-up · covered 2.3×</div>
+            <div class="impact-item"><strong>Kids activities</strong> 1–2 months covered</div>
+            <div class="impact-item"><strong>Savings buffer</strong> nearly a full extra week's budget</div>
+          </div>
+        </div>
+
+        <!-- EARNING SCENARIOS -->
+        <div class="sh">Earnings Range — Conservative to Optimistic</div>
+        <div class="metrics">
+          <div class="metric">
+            <div class="metric-label">Conservative</div>
+            <div class="metric-val">₪390</div>
+            <div class="metric-sub">Surveys + social only · ₪5/task avg</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Average (Base Model)</div>
+            <div class="metric-val">₪701</div>
+            <div class="metric-sub">Mixed tasks · 65% fulfillment</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Active User</div>
+            <div class="metric-val">₪1,092</div>
+            <div class="metric-sub">Installs + visits · ₪14/task avg</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Power User</div>
+            <div class="metric-val">₪1,400+</div>
+            <div class="metric-sub">90% fulfillment · premium tasks only</div>
+          </div>
+        </div>
+
+        <!-- TIME VS RETURN -->
+        <div class="sh">Time Investment vs. Return</div>
+        <div class="card">
+          <div class="card-title">Hourly Equivalent Earnings</div>
+          <div class="srow"><span class="sl">Time per day (base model)</span><span class="sv">~25–40 minutes</span></div>
+          <div class="srow"><span class="sl">Monthly time invested</span><span class="sv">~12–20 hours</span></div>
+          <div class="srow"><span class="sl">Monthly earnings (base)</span><span class="sv">₪701</span></div>
+          <div class="srow"><span class="sl">Effective hourly rate</span><span class="sv"><strong style="color:var(--yellow)">₪35–₪58 / hour</strong></span></div>
+          <div class="srow"><span class="sl">Palestinian min. wage equivalent</span><span class="sv">₪25 / hour (2024 West Bank)</span></div>
+          <div class="srow"><span class="sl">Deebak vs. min. wage</span><span class="sv"><span class="tag t-green">40–130% above minimum wage hourly rate</span></span></div>
+        </div>
+
+        <div class="hl">A user spending just 30 minutes per day on Deebak — less time than the average Palestinian spends on social media — can earn ₪701 extra per month. For a household living on ₪40/day, that is not supplemental income — it is transformative.</div>
+
+        <!-- WHAT CHANGES -->
+        <div class="sh">What This Changes for Real Users</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">For the Student (₪30/day)</div>
+            <p>Deebak closes the gap between a student allowance and financial independence. ₪701/month covers rent contributions, university materials, and daily transport — without requiring a formal job that conflicts with study hours. Tasks fit around lectures, not instead of them.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">For the Young Professional (₪40/day)</div>
+            <p>An extra ₪701/month on a ₪1,200 base is not a bonus — it is a 58% salary supplement. In Palestine's compressed labor market, this is the difference between living paycheck-to-paycheck and building a savings buffer for emergencies, family expenses, or a future investment.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">For the Stay-at-Home Parent (₪50/day)</div>
+            <p>Deebak enables income generation from a mobile phone during hours that cannot be sold to an employer. No commute, no childcare arrangements, no formal employer. Tasks completed during school runs, during nap times, during evenings — turning idle screen time into ₪700+ per month.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">The Aggregate Effect</div>
+            <p>If Deebak achieves 20,000 active users in Year 1, each earning a conservative ₪400/month on average, the platform injects <strong style="color:var(--yellow)">₪8,000,000 (eight million ILS) per month</strong> directly into the Palestinian economy — from businesses that were already spending on marketing, simply redirected to real people.</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ── 09 PRICING MODEL ───────────────────────── -->
+      <section class="page" id="page-pricing">
+        <div class="ph">
+          <div class="ph-tag">09 · Finance</div>
+          <div class="ph-title">Pricing Model</div>
+          <div class="ph-desc">Deebak charges businesses on a Cost-Per-Action basis — clients only pay when a task is verified as complete. Below is the defined pricing structure for campaigns, task types, and Deebak's take rate.</div>
+        </div>
+
+        <div class="sh">Campaign Pricing — Client Side</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Task Type</th><th>Min. Budget / Campaign</th><th>Cost Per Verified Action</th><th>Deebak Take Rate</th><th>Doer Reward</th></tr></thead>
+          <tbody>
+            <tr><td class="em">Survey / Quiz</td><td>₪500 (~$135)</td><td>₪2–₪8</td><td>25%</td><td>₪1.5–₪6</td></tr>
+            <tr><td class="em">App Install + Open</td><td>₪1,000 (~$270)</td><td>₪10–₪20</td><td>25%</td><td>₪7.5–₪15</td></tr>
+            <tr><td class="em">Store / Branch Visit</td><td>₪2,000 (~$540)</td><td>₪20–₪50</td><td>20%</td><td>₪16–₪40</td></tr>
+            <tr><td class="em">Data Collection (photo/form)</td><td>₪1,500 (~$405)</td><td>₪15–₪35</td><td>25%</td><td>₪11–₪26</td></tr>
+            <tr><td class="em">Social Action (follow/engage)</td><td>₪500 (~$135)</td><td>₪5–₪12</td><td>30%</td><td>₪3.5–₪8.5</td></tr>
+            <tr><td class="em">Product Trial (7-day)</td><td>₪3,000 (~$810)</td><td>₪40–₪80</td><td>20%</td><td>₪32–₪64</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="sh">Take Rate Rationale</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Why 20–30%?</div>
+            <p>Deebak's take rate is benchmarked against leading gig and task platforms globally: Mechanical Turk charges 20–40%, Fiverr charges 20%, and survey platforms typically retain 30–50%. The 20–30% range is competitive for a verified, fraud-resistant service with local payment rails — the premium is the quality guarantee.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Volume Discounts</div>
+            <p>Clients running campaigns &gt;₪10,000 receive a <strong style="color:var(--yellow)">15% take rate</strong>. Trusted-tier clients with &gt;3 completed campaigns receive a <strong style="color:var(--yellow)">18% take rate</strong>. NGO and government contracts are priced on a project basis with a flat platform fee rather than CPA commission.</p>
+          </div>
+        </div>
+
+        <div class="sh">Minimum Campaign Requirements</div>
+        <div class="card">
+          <div class="card-title">Entry Conditions for Business Clients</div>
+          <div class="srow"><span class="sl">Minimum campaign budget</span><span class="sv">₪500 (~$135 USD)</span></div>
+          <div class="srow"><span class="sl">Minimum task count per campaign</span><span class="sv">50 verified completions</span></div>
+          <div class="srow"><span class="sl">Payment method</span><span class="sv">Bank transfer, CliQ, or prepaid platform wallet</span></div>
+          <div class="srow"><span class="sl">Budget held in escrow</span><span class="sv">Full campaign budget deposited before launch</span></div>
+          <div class="srow"><span class="sl">Unused budget refund policy</span><span class="sv">100% refundable within 30 days if campaign underperforms</span></div>
+          <div class="srow"><span class="sl">Campaign approval time</span><span class="sv">24–72 hours (new clients), same-day (trusted tier)</span></div>
+        </div>
+
+        <div class="sh">Illustrative Revenue Example</div>
+        <div class="card">
+          <div class="card-title">Sample Campaign — Jawwal (Telecom)</div>
+          <p style="margin-bottom:12px">Jawwal launches a campaign: <em>"Install the MyJawwal app and complete your profile."</em></p>
+          <div class="srow"><span class="sl">Campaign budget</span><span class="sv">₪15,000</span></div>
+          <div class="srow"><span class="sl">Cost per verified install + profile</span><span class="sv">₪15</span></div>
+          <div class="srow"><span class="sl">Target completions</span><span class="sv">1,000 users</span></div>
+          <div class="srow"><span class="sl">Doer reward per task</span><span class="sv">₪11.25 (75% of task value)</span></div>
+          <div class="srow"><span class="sl">Deebak revenue (25% take rate)</span><span class="sv"><strong style="color:var(--yellow)">₪3,750 (~$1,013)</strong></span></div>
+          <div class="srow"><span class="sl">Jawwal's cost per acquired user</span><span class="sv">₪15 vs. ₪50–₪150 via traditional digital ads</span></div>
+        </div>
+      </section>
+
+      <!-- ── 14 DATA PRIVACY & LEGAL ──────────────────── -->
+      <section class="page" id="page-privacy">
+        <div class="ph">
+          <div class="ph-tag">14 · Legal &amp; People</div>
+          <div class="ph-title">Data Privacy &amp; Legal Framework</div>
+          <div class="ph-desc">Deebak collects sensitive personal data including national ID, income, and location. This section defines the legal, storage, and compliance architecture that governs how that data is handled and protected.</div>
+        </div>
+
+        <div class="sh">Data Collected &amp; Legal Basis</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Data Type</th><th>Purpose</th><th>Legal Basis</th><th>Sensitivity</th></tr></thead>
+          <tbody>
+            <tr><td class="em">Phone number</td><td>Identity, OTP verification</td><td>Contractual necessity</td><td><span class="tag t-amber">Medium</span></td></tr>
+            <tr><td class="em">National ID (scan)</td><td>KYC — prevent fake accounts</td><td>Explicit consent + legal obligation</td><td><span class="tag t-red">High</span></td></tr>
+            <tr><td class="em">Selfie / liveness photo</td><td>KYC — ID matching</td><td>Explicit consent</td><td><span class="tag t-red">High</span></td></tr>
+            <tr><td class="em">Name, gender, age</td><td>Profile targeting for campaigns</td><td>Explicit consent</td><td><span class="tag t-amber">Medium</span></td></tr>
+            <tr><td class="em">Income bracket, profession</td><td>Audience segmentation</td><td>Explicit consent — optional, unlocks higher rewards</td><td><span class="tag t-amber">Medium</span></td></tr>
+            <tr><td class="em">GPS / location</td><td>Physical task verification</td><td>Explicit consent, task-specific only</td><td><span class="tag t-amber">Medium</span></td></tr>
+            <tr><td class="em">Device fingerprint</td><td>Fraud prevention (1 account/device)</td><td>Legitimate interest</td><td><span class="tag t-green">Low</span></td></tr>
+            <tr><td class="em">Task completion data</td><td>Verification, analytics</td><td>Contractual necessity</td><td><span class="tag t-green">Low</span></td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="sh">Storage &amp; Security Architecture</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">ID Document Storage</div>
+            <p>National ID scans and selfies are stored encrypted at rest (AES-256) in isolated cloud storage (AWS S3 with server-side encryption). Access is restricted to the KYC review queue only. Documents are deleted from active storage after KYC approval — only a verified status flag is retained in the main database. Raw ID images are never shared with business clients under any circumstance.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Personal Profile Data</div>
+            <p>Income, profession, and demographic data are stored pseudonymously — linked to an internal user token, not to name or national ID. Business clients receive only aggregated, anonymized audience insights from campaign analytics. No individual profile is ever exposed to a business client. Data is processed on servers hosted within the EU or GCC jurisdiction where applicable.</p>
+          </div>
+        </div>
+
+        <div class="sh">Regulatory Compliance Strategy</div>
+        <div class="card">
+          <div class="card-title">Palestine — Primary Jurisdiction</div>
+          <p>Palestine does not yet have a comprehensive data protection law equivalent to GDPR, but the Palestinian Monetary Authority (PMA) governs digital financial services. Deebak will register as a fintech operator with PMA and operate under its Electronic Payment and Settlement Systems Regulation. User consent for data collection will be explicit, granular, and revocable — modeled on GDPR best practices voluntarily, ahead of expected Palestinian data protection legislation.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Crypto Redemption — Legal Position</div>
+          <p>USDT (Tether) redemption is offered as a <strong style="color:var(--yellow)">non-custodial transfer</strong> — Deebak facilitates the transfer but does not hold crypto on behalf of users. This positions the service as a payment facilitator rather than a crypto exchange, reducing regulatory exposure. Users in jurisdictions where crypto is restricted may be limited to fiat cash-out options only. Legal counsel will confirm jurisdiction-by-jurisdiction eligibility before each market launch.</p>
+        </div>
+        <div class="card">
+          <div class="card-title">Conflict Context — West Bank Operations</div>
+          <p>The West Bank operates under a complex legal framework (Oslo Accords) that restricts telecommunications spectrum and requires coordination with Israeli authorities for 4G deployment. As of January 2026, Israel authorised 4G enhancement for West Bank Palestinians — a significant positive for Deebak's mobile infrastructure. Gaza operations are suspended indefinitely due to ongoing conflict and infrastructure destruction. All initial operations are West Bank-focused, with Gaza re-entry planned only after full infrastructure restoration.</p>
+        </div>
+
+        <div class="sh">User Rights &amp; Controls</div>
+        <div class="card">
+          <div class="card-title">User Data Rights (GDPR-modeled)</div>
+          <div class="srow"><span class="sl">Right to access</span><span class="sv">Users can download all their data at any time</span></div>
+          <div class="srow"><span class="sl">Right to deletion</span><span class="sv">Account and data deletion available in-app — forfeits unclaimed credits</span></div>
+          <div class="srow"><span class="sl">Right to correction</span><span class="sv">Profile data editable, KYC re-verification required for ID changes</span></div>
+          <div class="srow"><span class="sl">Consent withdrawal</span><span class="sv">Optional profile fields (income, vehicle) can be removed at any time</span></div>
+          <div class="srow"><span class="sl">Data portability</span><span class="sv">Task history and earnings exportable as CSV</span></div>
+          <div class="srow"><span class="sl">Marketing opt-out</span><span class="sv">Campaign targeting opt-out available (reduces task availability)</span></div>
+        </div>
+      </section>
+
+      <!-- ── 15 TEAM ─────────────────────────────────── -->
+      <section class="page" id="page-team">
+        <div class="ph">
+          <div class="ph-tag">15 · Legal &amp; People</div>
+          <div class="ph-title">Team</div>
+          <div class="ph-desc">Investors fund teams, not ideas. This section captures the founding team, key hires needed, and the organizational structure Deebak is building toward.</div>
+        </div>
+
+        <div class="hl">Note: This section is a placeholder pending founder approval of public disclosure. Content below reflects the roles and expertise required — specific names and bios to be populated before investor-facing distribution.</div>
+
+        <div class="sh">Founding Team — Roles Required</div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Chief Executive Officer</div>
+            <p>Leads vision, strategy, investor relations, and key business partnerships. Must have experience in startup leadership, MENA business networks, and ideally prior exposure to fintech, ad-tech, or marketplace businesses. The CEO is the primary face to investors and enterprise clients.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Chief Technology Officer</div>
+            <p>Owns the full technology stack — mobile app, backend, fraud detection engine, and admin portals. Should have hands-on React Native and Node.js experience. Responsible for security architecture, KYC integration, and payment gateway engineering.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Head of Business Development</div>
+            <p>Drives the enterprise sales pipeline — banks, telecoms, ISPs, e-commerce. Must have existing relationships in the Palestinian and Jordanian business community. Responsible for converting the 10+ early interest signals into signed pilot contracts.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">Head of Operations &amp; Compliance</div>
+            <p>Manages day-to-day operations, KYC review queue, fraud escalations, and regulatory filings. Liaison with PMA, legal counsel, and payment gateway partners. Critical role for maintaining platform trust and investor confidence.</p>
+          </div>
+        </div>
+
+        <div class="sh">Key Hires — First 12 Months</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Role</th><th>Priority</th><th>When</th><th>Budget Allocation</th></tr></thead>
+          <tbody>
+            <tr><td class="em">Senior Full-Stack Developer</td><td><span class="tag t-red">Critical</span></td><td>Month 1</td><td>From Product Dev budget (40%)</td></tr>
+            <tr><td class="em">UI/UX Designer (Mobile)</td><td><span class="tag t-red">Critical</span></td><td>Month 1</td><td>From Product Dev budget (40%)</td></tr>
+            <tr><td class="em">Enterprise Sales Executive</td><td><span class="tag t-red">Critical</span></td><td>Month 1</td><td>From Marketing budget (25%)</td></tr>
+            <tr><td class="em">Community / Growth Manager</td><td><span class="tag t-amber">High</span></td><td>Month 2</td><td>From Marketing budget (25%)</td></tr>
+            <tr><td class="em">KYC / Compliance Officer</td><td><span class="tag t-amber">High</span></td><td>Month 3</td><td>From Operations budget (20%)</td></tr>
+            <tr><td class="em">Data Analyst</td><td><span class="tag t-blue">Medium</span></td><td>Month 6</td><td>From Operations budget (20%)</td></tr>
+          </tbody>
+        </table></div>
+
+        <div class="sh">Advisors &amp; Support Network</div>
+        <div class="card">
+          <div class="card-title">Advisory Board — Profiles Needed</div>
+          <div class="srow"><span class="sl">Fintech / Payments Advisor</span><span class="sv">Senior figure from Jawwal Pay, Bank of Palestine, or regional fintech</span></div>
+          <div class="srow"><span class="sl">Legal Advisor (Palestine)</span><span class="sv">Specialist in Palestinian commercial law and PMA regulations</span></div>
+          <div class="srow"><span class="sl">Digital Marketing / Ad-Tech Advisor</span><span class="sv">Regional CMO or ad agency principal — validates the CPA value prop</span></div>
+          <div class="srow"><span class="sl">Startup / VC Advisor</span><span class="sv">Someone with MENA fundraising experience — ideally a prior founder</span></div>
+        </div>
+
+        <div class="sh">Organizational Milestones</div>
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>Milestone</th><th>Target Date</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>Founding team fully assembled</td><td>Month 1</td><td><span class="tag t-amber">In Progress</span></td></tr>
+            <tr><td>Legal entity registered (Palestine)</td><td>Month 1</td><td><span class="tag t-amber">Planned</span></td></tr>
+            <tr><td>Advisory board formed (2 members min)</td><td>Month 2</td><td><span class="tag t-gray">Planned</span></td></tr>
+            <tr><td>First 3 key hires onboarded</td><td>Month 2</td><td><span class="tag t-gray">Planned</span></td></tr>
+            <tr><td>HR &amp; payroll system in place</td><td>Month 3</td><td><span class="tag t-gray">Planned</span></td></tr>
+            <tr><td>Full 8-person team operational</td><td>Month 6</td><td><span class="tag t-gray">Planned</span></td></tr>
+          </tbody>
+        </table></div>
+      </section>
+
+
+      <!-- ── 13 CRITICAL ANALYSIS ──────────────────────── -->
+      <section class="page" id="page-analysis">
+        <div class="ph">
+          <div class="ph-tag">16 · Audit</div>
+          <div class="ph-title">Critical Analysis</div>
+          <div class="ph-desc">A thorough fact-check of all figures, an honest assessment of business acumen, identified weaknesses, and a prioritized list of suggested corrections and improvements. Last reviewed: April 2026.</div>
+        </div>
+
+        <!-- FACT CHECK -->
+        <div class="sh">Fact-Check: Figures & Statistics</div>
+
+        <div class="card">
+          <div class="card-title">⚠ MENA Ad Market — "$10B+ in 2019" — Outdated & Understated</div>
+          <p>The document cites "$10B+ spent on digital ads in MENA in 2019" sourced to Statista. This figure is stale and misleading by 2026 standards. IAB MENA's 2024 study confirms MENA digital ad spend reached <strong style="color:var(--yellow)">$6.25 billion in 2023</strong> (digital only), while total advertising across all channels exceeded $8–12 billion. Using a 2019 figure in a 2026 investor document signals a lack of current research. The pitch should use the 2023/2024 IAB MENA figure and note the 13.6% year-on-year growth trajectory.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">⚠ Ad Waste "40%+" — Imprecise & Needs Source</div>
+          <p>The "40%+ media waste" claim is cited without a source. Research data shows ad fraud accounts for roughly <strong style="color:var(--yellow)">12–23% of digital ad spend</strong> globally (Juniper Research, ANA 2024). The broader "waste" figure — including poor targeting, viewability issues, and MFA sites — can reach 20–30% by some estimates (NEXD, 2025). The "40%+" claim is defensible only if combining fraud, poor targeting, and ad-block losses together, but this must be explicitly sourced. Unsourced round numbers undermine credibility with sophisticated investors.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">✓ "450+ ads per day" — Directionally Correct</div>
+          <p>Various studies estimate daily ad exposure between 4,000–10,000 impressions for heavy users, but "seen" or "noticed" ads are estimated at 300–700. The "450+" figure is within defensible range for conscious ad encounters in MENA markets with high mobile usage. Acceptable, but should be attributed to the specific Global Web Index 2020 study cited in the pitch deck.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">✓ "3.5h+ daily screentime" — Confirmed</div>
+          <p>Confirmed by multiple sources. <strong style="color:var(--yellow)">Astute Analytica (2024)</strong> reports MENA users spend an average of 3.5 hours daily on social media platforms alone — consistent with the document's claim. This figure is accurate and well-supported.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">⚠ Global Gig Economy "$500B+" — Correct but Needs Update</div>
+          <p>The "$500B+ global gig economy" (Statista 2025) is now confirmed accurate — <strong style="color:var(--yellow)">multiple 2024–2025 sources put the figure at $461–582 billion</strong>, so "$500B+" is a reasonable approximation. However the document should note this is projected to grow to $582B in 2025 and $2.17 trillion by 2034 at 15.79% CAGR (Market Reports World, 2025) — the growth story is far more compelling than the current snapshot.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">✗ Reward Apps Market "$15B+ at 10% CAGR" — Significantly Inaccurate</div>
+          <p>This is the most problematic figure in the document. Multiple 2024 research sources put the global cashback and rewards app market at <strong style="color:var(--yellow)">$3.5–$8.5 billion in 2024</strong> (not $15B), growing at 7–12% CAGR (not 10%). The $15B figure appears to conflate the broader loyalty program market ($100B+) with the specific app segment. This discrepancy is material — an investor who checks this will lose confidence. Recommend correcting to: "Rewards app market: ~$8B (2024), projected $23B by 2033 at 12.4% CAGR (Credence Research, 2025)."</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">⚠ MENA Youth Unemployment "~27%" — Overstated</div>
+          <p>The ILO's 2024 Global Employment Trends confirms <strong style="color:var(--yellow)">North Africa youth unemployment at 22.3–22.5%</strong>, and the World Bank's MENA developing countries figure for 2024 is 19.6%. The "~27%" cited likely comes from an older or differently scoped dataset (possibly including Arab States with female unemployment weighted in). Should be updated to "~22% (ILO, 2024)" to avoid being challenged on sourcing.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">⚠ Palestine Mobile Penetration "~72%" — Understated</div>
+          <p>DataReportal's Digital 2024 report shows Palestine had <strong style="color:var(--yellow)">82.2% mobile connection penetration</strong> and 88.6% internet penetration as of January 2024. PCBS data confirms 83% smartphone ownership in the West Bank specifically. The "~72%" in the market table is outdated — updating to ~82–88% strengthens the addressable market argument considerably.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-title">⚠ "200M+ MENA Smartphone Users" — Needs Clarification</div>
+          <p>GSMA Intelligence projects unique mobile subscribers in MENA at 459 million by 2025. The "200M" figure likely refers to smartphone internet users specifically, not total mobile connections. The distinction matters — clarify the exact metric and source. The actual addressable base is larger than stated, which is a positive for the pitch.</p>
+        </div>
+
+        <!-- BUSINESS ACUMEN -->
+        <div class="sh">Business Acumen Assessment</div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">✓ Strengths</div>
+            <p><strong style="color:var(--yellow)">CPA model is sound.</strong> Charging only for verified completions is a genuinely differentiated value proposition vs. CPM/CPC incumbents. The alignment of incentives (business pays only for success) is compelling and defensible.<br/><br/>
+            <strong style="color:var(--yellow)">Dual-sided flywheel logic is correct.</strong> Referral-locked credits force quality signups. Frozen balance mechanic is a clever passive revenue stream that also nudges user verification.<br/><br/>
+            <strong style="color:var(--yellow)">First-mover in an overlooked market.</strong> No direct equivalent exists in Palestine or the immediate region. The local trust advantage is real and hard for outsiders to replicate quickly.</p>
+          </div>
+          <div class="card">
+            <div class="card-title">✗ Weaknesses</div>
+            <p><strong style="color:var(--yellow)">Revenue projections are thin.</strong> $50K revenue from 30 clients and 20K users in Year 1 implies only ~$1,667 average revenue per client. No unit economics justify this — a single bank campaign could generate $5K–$50K. Either the client count or revenue figure is wrong.<br/><br/>
+            <strong style="color:var(--yellow)">10% net margin in Year 1 is unrealistic.</strong> Pre-revenue startups rarely achieve positive margins in Year 1 while also paying salaries and infrastructure. This signals financial modeling inexperience to investors.<br/><br/>
+            <strong style="color:var(--yellow)">No pricing model is defined.</strong> What does a campaign cost? What's the minimum spend? These are the first questions a business client asks.</p>
+          </div>
+        </div>
+
+        <!-- WEAKNESSES -->
+        <div class="sh">Identified Weaknesses by Category</div>
+
+        <div class="card">
+          <div class="card-title">1 · Financial Model — Critical Issues</div>
+          <div class="srow"><span class="sl">Year 1 net margin of 10%</span><span class="sv"><span class="tag t-red">Unrealistic</span></span></div>
+          <div class="srow"><span class="sl">$50K revenue / 30 clients = $1,667/client avg.</span><span class="sv"><span class="tag t-red">Too Low</span></span></div>
+          <div class="srow"><span class="sl">No cash flow or burn rate model</span><span class="sv"><span class="tag t-red">Missing</span></span></div>
+          <div class="srow"><span class="sl">No defined minimum campaign spend</span><span class="sv"><span class="tag t-red">Missing</span></span></div>
+          <div class="srow"><span class="sl">Frozen balance revenue not quantified</span><span class="sv"><span class="tag t-amber">Vague</span></span></div>
+          <div class="srow"><span class="sl">No sensitivity analysis (best/base/worst case)</span><span class="sv"><span class="tag t-amber">Missing</span></span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">2 · Market Data — Accuracy Issues</div>
+          <div class="srow"><span class="sl">MENA ad market figure from 2019</span><span class="sv"><span class="tag t-red">Outdated — update to 2023/2024</span></span></div>
+          <div class="srow"><span class="sl">Reward apps "$15B at 10% CAGR"</span><span class="sv"><span class="tag t-red">Wrong — actual ~$8B at 12% CAGR</span></span></div>
+          <div class="srow"><span class="sl">MENA youth unemployment "27%"</span><span class="sv"><span class="tag t-amber">Overstated — ILO says ~20–22%</span></span></div>
+          <div class="srow"><span class="sl">Palestine mobile penetration "72%"</span><span class="sv"><span class="tag t-amber">Understated — DataReportal says 82%+</span></span></div>
+          <div class="srow"><span class="sl">"40%+ media waste" — no source</span><span class="sv"><span class="tag t-amber">Needs citation</span></span></div>
+          <div class="srow"><span class="sl">Global Web Index 2020 cited for multiple stats</span><span class="sv"><span class="tag t-amber">Stale — use 2024 sources</span></span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">3 · Product Strategy — Gaps</div>
+          <div class="srow"><span class="sl">No defined task pricing table for clients</span><span class="sv"><span class="tag t-red">Missing</span></span></div>
+          <div class="srow"><span class="sl">No minimum viable task reward stated</span><span class="sv"><span class="tag t-red">Missing</span></span></div>
+          <div class="srow"><span class="sl">Task verification for physical visits — GPS spoofing risk not addressed</span><span class="sv"><span class="tag t-amber">Weak</span></span></div>
+          <div class="srow"><span class="sl">No mention of app store strategy (Google Play, Huawei AppGallery)</span><span class="sv"><span class="tag t-amber">Missing</span></span></div>
+          <div class="srow"><span class="sl">Data privacy framework (GDPR-equivalent for Palestine/Jordan) not defined</span><span class="sv"><span class="tag t-amber">Missing</span></span></div>
+          <div class="srow"><span class="sl">No mention of how conflict/instability in Gaza affects ops</span><span class="sv"><span class="tag t-amber">Avoided</span></span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">4 · GTM Strategy — Gaps</div>
+          <div class="srow"><span class="sl">No defined CAC calculation — "$&lt;1 per user via referral" is assumed, not proven</span><span class="sv"><span class="tag t-amber">Unvalidated</span></span></div>
+          <div class="srow"><span class="sl">Sales team size and cost not stated</span><span class="sv"><span class="tag t-red">Missing</span></span></div>
+          <div class="srow"><span class="sl">No pilot client named or LOI confirmed</span><span class="sv"><span class="tag t-amber">Weak Traction</span></span></div>
+          <div class="srow"><span class="sl">Jordan entry strategy is vague — "local partnership" undefined</span><span class="sv"><span class="tag t-amber">Vague</span></span></div>
+          <div class="srow"><span class="sl">No content/community strategy for user retention beyond tasks</span><span class="sv"><span class="tag t-amber">Missing</span></span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">5 · Risk & Compliance — Underweighted</div>
+          <div class="srow"><span class="sl">Palestinian regulatory environment is uniquely complex (Oslo Accords, ILS currency restrictions)</span><span class="sv"><span class="tag t-red">Underaddressed</span></span></div>
+          <div class="srow"><span class="sl">Crypto redemption legality in Palestine not mentioned</span><span class="sv"><span class="tag t-red">Missing</span></span></div>
+          <div class="srow"><span class="sl">"Will not wait for approvals" stance — may concern institutional investors</span><span class="sv"><span class="tag t-amber">Risky Framing</span></span></div>
+          <div class="srow"><span class="sl">No mention of how user data is stored, encrypted, or protected</span><span class="sv"><span class="tag t-red">Missing</span></span></div>
+          <div class="srow"><span class="sl">National ID collection without explicit legal framework is a liability</span><span class="sv"><span class="tag t-red">High Risk</span></span></div>
+        </div>
+
+        <!-- SUGGESTED CHANGES -->
+        <div class="sh">Prioritized Suggested Changes</div>
+
+        <div class="tbl-wrap"><table>
+          <thead><tr><th>#</th><th>Change</th><th>Section</th><th>Priority</th></tr></thead>
+          <tbody>
+            <tr><td class="em" style="color:var(--yellow)">1</td><td>Replace "$15B reward apps market" with accurate $8B figure + correct CAGR</td><td>Market Research</td><td><span class="tag t-red">Critical</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">2</td><td>Update MENA ad market to 2023 IAB figure ($6.25B digital / $8–12B total)</td><td>Executive Summary + Market</td><td><span class="tag t-red">Critical</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">3</td><td>Rework Year 1 financials — remove 10% margin, add burn rate & runway model</td><td>Financial Projections</td><td><span class="tag t-red">Critical</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">4</td><td>Add a pricing table: minimum campaign size, cost per task type, Deebak take rate</td><td>Business Model</td><td><span class="tag t-red">Critical</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">5</td><td>Add data privacy & ID storage legal framework section</td><td>Feasibility / Tech Specs</td><td><span class="tag t-red">Critical</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">6</td><td>Update Palestine mobile penetration to 82–88% (DataReportal 2024)</td><td>Market Research</td><td><span class="tag t-amber">High</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">7</td><td>Correct youth unemployment to ~20–22% (ILO 2024, World Bank)</td><td>Market Research</td><td><span class="tag t-amber">High</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">8</td><td>Add source citation for "40% media waste" claim or reframe with sourced data</td><td>Executive Summary</td><td><span class="tag t-amber">High</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">9</td><td>Address GPS spoofing risk in physical task verification section</td><td>Verification Logic</td><td><span class="tag t-amber">High</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">10</td><td>Add crypto legality note for Palestine — clarify USDT redemption is non-custodial</td><td>Business Model + Feasibility</td><td><span class="tag t-amber">High</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">11</td><td>Name at least one pilot client or share an anonymized LOI to strengthen traction</td><td>GTM + Executive Summary</td><td><span class="tag t-amber">High</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">12</td><td>Replace Global Web Index 2020 citations with 2023–2024 DataReportal / IAB MENA data</td><td>All Sections</td><td><span class="tag t-amber">High</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">13</td><td>Add 3-scenario financial model (conservative / base / optimistic)</td><td>Financial Projections</td><td><span class="tag t-blue">Medium</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">14</td><td>Define Jordan "local partnership" — name the target or type of entity</td><td>GTM Strategy</td><td><span class="tag t-blue">Medium</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">15</td><td>Add app store strategy (Google Play + Huawei AppGallery for MENA reach)</td><td>Features & GTM</td><td><span class="tag t-blue">Medium</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">16</td><td>Add team section — investors fund teams, not ideas. Who are the founders?</td><td>New Section Needed</td><td><span class="tag t-blue">Medium</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">17</td><td>Address Gaza/conflict context explicitly — how does instability affect ops and pivot plans?</td><td>Feasibility Study</td><td><span class="tag t-blue">Medium</span></td></tr>
+            <tr><td class="em" style="color:var(--yellow)">18</td><td>Add user retention strategy beyond tasks — community, leaderboards, streaks</td><td>Features & GTM</td><td><span class="tag t-gray">Low</span></td></tr>
+          </tbody>
+        </table></div>
+
+        <!-- OVERALL VERDICT -->
+        <div class="sh">Overall Verdict</div>
+
+        <div class="hl">Deebak has a genuinely differentiated idea with real market timing. The CPA model, verified data layer, and MENA-first approach are legitimate competitive advantages. However, the document in its current form would not survive due diligence from a sophisticated investor — primarily due to the inaccurate reward market figure, the unrealistic Year 1 margin, and the absence of a defined pricing model. The business acumen behind the core model is strong; the financial and data rigor needs to match it.</div>
+
+        <div class="two-col">
+          <div class="card">
+            <div class="card-title">Overall Business Idea</div>
+            <div class="srow"><span class="sl">Core concept validity</span><span class="sv"><span class="tag t-green">Strong</span></span></div>
+            <div class="srow"><span class="sl">Market timing</span><span class="sv"><span class="tag t-green">Good</span></span></div>
+            <div class="srow"><span class="sl">Competitive differentiation</span><span class="sv"><span class="tag t-green">Good</span></span></div>
+            <div class="srow"><span class="sl">Revenue model logic</span><span class="sv"><span class="tag t-green">Sound</span></span></div>
+            <div class="srow"><span class="sl">Execution complexity</span><span class="sv"><span class="tag t-amber">High</span></span></div>
+          </div>
+          <div class="card">
+            <div class="card-title">Document Readiness</div>
+            <div class="srow"><span class="sl">Data accuracy</span><span class="sv"><span class="tag t-amber">Needs Work</span></span></div>
+            <div class="srow"><span class="sl">Financial model depth</span><span class="sv"><span class="tag t-red">Weak</span></span></div>
+            <div class="srow"><span class="sl">Risk & compliance coverage</span><span class="sv"><span class="tag t-red">Incomplete</span></span></div>
+            <div class="srow"><span class="sl">GTM specificity</span><span class="sv"><span class="tag t-amber">Vague</span></span></div>
+            <div class="srow"><span class="sl">Investor-readiness</span><span class="sv"><span class="tag t-amber">Not Yet</span></span></div>
+          </div>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script>
+  function unlock() {
+    var v = document.getElementById('pwd').value;
+    var err = document.getElementById('lock-err');
+    if (v === '2404') {
+      document.getElementById('lock').style.display = 'none';
+      document.getElementById('app').classList.add('show');
+    } else {
+      err.textContent = 'Incorrect access code. Please try again.';
+      document.getElementById('pwd').value = '';
+      document.getElementById('pwd').focus();
+    }
+  }
+
+  document.getElementById('pwd').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') unlock();
+  });
+
+  function go(id, el) {
+    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
+    document.getElementById('page-' + id).classList.add('active');
+    el.classList.add('active');
+    document.querySelector('.content').scrollTop = 0;
+    window.scrollTo(0, 0);
+  }
+
+  function toggleTheme() {
+    document.body.classList.toggle('light');
+    var isLight = document.body.classList.contains('light');
+    localStorage.setItem('deebak-theme', isLight ? 'light' : 'dark');
+  }
+
+  (function() {
+    var saved = localStorage.getItem('deebak-theme');
+    if (saved === 'light') document.body.classList.add('light');
+  })();
+</script>
+</body>
+</html>
